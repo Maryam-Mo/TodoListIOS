@@ -10,10 +10,11 @@
 		B237D67A2431913700991B24 /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B237D6792431913700991B24 /* UserDataModel.swift */; };
 		B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A8D23FD1C5F00021642 /* AppDelegate.swift */; };
 		B2620A9023FD1C5F00021642 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A8F23FD1C5F00021642 /* SceneDelegate.swift */; };
-		B2620A9223FD1C5F00021642 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A9123FD1C5F00021642 /* ViewController.swift */; };
+		B2620A9223FD1C5F00021642 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A9123FD1C5F00021642 /* LogInViewController.swift */; };
 		B2620A9523FD1C5F00021642 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9323FD1C5F00021642 /* Main.storyboard */; };
 		B2620A9723FD1C7200021642 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9623FD1C7200021642 /* Assets.xcassets */; };
 		B2620A9A23FD1C7200021642 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9823FD1C7200021642 /* LaunchScreen.storyboard */; };
+		B2901FE7243C1083000F7F90 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901FE6243C1083000F7F90 /* RegisterViewController.swift */; };
 		BF87306F719E144CD089F192 /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79BBF93A83FEAD346B6027C /* Pods_TodoList.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,11 +26,12 @@
 		B2620A8A23FD1C5F00021642 /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2620A8D23FD1C5F00021642 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2620A8F23FD1C5F00021642 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B2620A9123FD1C5F00021642 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B2620A9123FD1C5F00021642 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		B2620A9423FD1C5F00021642 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2620A9623FD1C7200021642 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2620A9923FD1C7200021642 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2620A9B23FD1C7200021642 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2901FE6243C1083000F7F90 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +66,9 @@
 		B24ECE8F23FFF1DF00250584 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B2620A9123FD1C5F00021642 /* ViewController.swift */,
+				B2620A9123FD1C5F00021642 /* LogInViewController.swift */,
 				B2620A8D23FD1C5F00021642 /* AppDelegate.swift */,
+				B2901FE6243C1083000F7F90 /* RegisterViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -234,7 +237,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B237D67A2431913700991B24 /* UserDataModel.swift in Sources */,
-				B2620A9223FD1C5F00021642 /* ViewController.swift in Sources */,
+				B2901FE7243C1083000F7F90 /* RegisterViewController.swift in Sources */,
+				B2620A9223FD1C5F00021642 /* LogInViewController.swift in Sources */,
 				B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */,
 				B2620A9023FD1C5F00021642 /* SceneDelegate.swift in Sources */,
 			);

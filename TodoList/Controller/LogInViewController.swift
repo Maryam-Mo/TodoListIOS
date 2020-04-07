@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     
     // Mark: Properties
     @IBOutlet weak var userNameTxt: UITextField!
@@ -46,8 +46,19 @@ class ViewController: UIViewController {
             }        }
 
         task.resume()
-        
+    }
+    
+    
+    @IBAction func register(_ sender: Any) {
+        performSegue(withIdentifier: "openRegisterPage", sender: self)
         
     }
+    
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "openRegisterPage" {
+//            let destination = segue.destination as! RegisterViewController
+//        }
+//    }
 }
 
