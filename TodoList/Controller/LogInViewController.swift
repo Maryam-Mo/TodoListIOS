@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
 
     @IBAction func login(_ sender: UIButton) {
         let session = URLSession.shared
-        let url = URL(string: "http://192.168.1.4:8080/api/user/login")!
+        let url = URL(string: "http://192.168.1.12:8080/api/user/login")!
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -30,8 +30,8 @@ class LoginViewController: UIViewController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let json = [
-            "userName": "mary",
-            "password": "mary"
+            "userName": "\(userNameTxt.text)",
+            "password": "\(passwordTxt.text)"
         ]
         
         let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])

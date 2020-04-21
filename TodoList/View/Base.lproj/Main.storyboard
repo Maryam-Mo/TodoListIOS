@@ -119,10 +119,10 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uwx-5R-fS9">
                                 <rect key="frame" x="32" y="282" width="350" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckP-ae-8ma">
-                                <rect key="frame" x="149.5" y="733" width="115" height="52"/>
+                                <rect key="frame" x="149.5" y="456" width="115" height="52"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="K50-Mn-qsH"/>
@@ -149,7 +149,7 @@
                             <constraint firstItem="yKh-pI-Xwh" firstAttribute="leading" secondItem="7VI-i4-1ZP" secondAttribute="leading" id="Ipi-Db-wxb"/>
                             <constraint firstItem="uwx-5R-fS9" firstAttribute="leading" secondItem="yKh-pI-Xwh" secondAttribute="leading" id="OeM-c5-cBX"/>
                             <constraint firstItem="yKh-pI-Xwh" firstAttribute="top" secondItem="7VI-i4-1ZP" secondAttribute="bottom" constant="22" id="Pg5-FK-IRc"/>
-                            <constraint firstItem="0v4-JM-Asq" firstAttribute="bottom" secondItem="ckP-ae-8ma" secondAttribute="bottom" constant="23" id="Rn9-kh-woq"/>
+                            <constraint firstItem="0v4-JM-Asq" firstAttribute="bottom" secondItem="ckP-ae-8ma" secondAttribute="bottom" constant="300" id="Rn9-kh-woq"/>
                             <constraint firstItem="1Cz-wV-RwF" firstAttribute="centerX" secondItem="0v4-JM-Asq" secondAttribute="centerX" id="SDM-SH-2yV"/>
                             <constraint firstItem="e5y-p1-vwx" firstAttribute="leading" secondItem="0v4-JM-Asq" secondAttribute="leading" constant="32" id="XFO-SM-4gt"/>
                             <constraint firstItem="yKh-pI-Xwh" firstAttribute="width" secondItem="7VI-i4-1ZP" secondAttribute="width" id="XMw-e5-Beu"/>
