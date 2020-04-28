@@ -32,6 +32,7 @@ class TodoViewController: UIViewController {
             if selectedTodo != nil {
                 target?.todo = selectedTodo
                 onUpdate = true
+                selectedTodo = nil
             }
             target?.delegate = self
         }
@@ -47,6 +48,8 @@ extension TodoViewController: CanRecieveDelegate {
         self.createdTodo = todo
         if onUpdate {
             self.todoArray[selectedTodoIndex!] = self.createdTodo!
+            self.todoTableView.reloadData()
+            
         } else {
             self.todoArray.insert(createdTodo!, at: 0)
             self.todoTableView.beginUpdates()
@@ -70,7 +73,6 @@ extension TodoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTodo = todoArray[indexPath.row]
         selectedTodoIndex = indexPath.row
-        print(selectedTodoIndex)
         performSegue(withIdentifier: "openAddTodoPage", sender: self)
     }
 
