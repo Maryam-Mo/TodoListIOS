@@ -23,7 +23,7 @@ class RegisterViewController: UIViewController {
         
     @IBAction func save(_ sender: Any) {
         let session = URLSession.shared
-        let url = URL(string: "http://192.168.1.12:8080/api/user/register")!
+        let url = URL(string: "http://192.168.1.9:8080/api/user/register")!
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
