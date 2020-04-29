@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class RegisterViewController: UIViewController {
     
@@ -22,13 +24,7 @@ class RegisterViewController: UIViewController {
     }
         
     @IBAction func save(_ sender: Any) {
-        let session = URLSession.shared
-        let url = URL(string: "http://192.168.1.9:8080/api/user/register")!
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let url = "http://192.168.1.5:8080/api/user/register"
 
         let json = [
             "firstName": "\(firstNameTxt.text)",
@@ -37,23 +33,16 @@ class RegisterViewController: UIViewController {
             "userName": "\(userNameTxt.text)",
             "password": "\(passwordTxt.text)"
         ]
-        
-        print(json)
-        
-        let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
-
-        let task = session.uploadTask(with: request, from: jsonData) { data, response, error in
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                let alert = UIAlertController(title: "Resigter", message: "The user is registered!", preferredStyle: UIAlertController.Style.alert)
-
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
-            }        }
-
-        task.resume()
-        
-    }
-    
+                
+        Alamofire.request(url, method: .post, parameters: json, encoding: JSONEncoding.default, headers: [:]).responseJSON {
+                    response in
+                    switch (response.result) {
+                    case .success:
+                    self.performSegue(withIdentifier: "openLoginPage", sender: self)
+                    case .failure:
+                        print(Error.self)
+                    }
+                }
+        }
     
 }

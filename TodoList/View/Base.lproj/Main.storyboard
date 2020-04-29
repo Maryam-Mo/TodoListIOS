@@ -13,16 +13,16 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-Rf-Pb1">
-                                <rect key="frame" x="32" y="137" width="350" height="34"/>
+                                <rect key="frame" x="32" y="93" width="350" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iBK-pk-Ry0">
-                                <rect key="frame" x="101" y="430" width="212" height="46"/>
+                                <rect key="frame" x="101" y="381" width="212" height="46"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIm-iJ-MBG">
                                         <rect key="frame" x="165" y="5.5" width="47" height="35"/>
@@ -58,12 +58,12 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QtJ-Ff-FqL">
-                                <rect key="frame" x="32" y="84" width="350" height="34"/>
+                                <rect key="frame" x="32" y="40" width="350" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQx-l1-oA1">
-                                <rect key="frame" x="32" y="191" width="350" height="0.0"/>
+                                <rect key="frame" x="32" y="147" width="350" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -88,6 +88,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="2Dz-8P-u8X"/>
                     <connections>
                         <outlet property="errorLbl" destination="vQx-l1-oA1" id="EFr-06-oS0"/>
                         <outlet property="passwordTxt" destination="ofI-Rf-Pb1" id="l3I-Uh-NJQ"/>
@@ -183,6 +184,7 @@
                         <outlet property="lastNameTxt" destination="e5y-p1-vwx" id="wNt-gx-3uJ"/>
                         <outlet property="passwordTxt" destination="uwx-5R-fS9" id="Ucf-Ec-XmY"/>
                         <outlet property="userNameTxt" destination="yKh-pI-Xwh" id="nVV-f9-Lj0"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="openLoginPage" id="Waf-rM-yJD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTH-e4-rdu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
