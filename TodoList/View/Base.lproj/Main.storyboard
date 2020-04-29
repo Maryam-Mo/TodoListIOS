@@ -149,9 +149,16 @@
                                     <action selector="save:" destination="gZA-Lu-xgQ" eventType="touchUpInside" id="v9D-Hp-x8p"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJb-yO-Pvb">
+                                <rect key="frame" x="32" y="346" width="350" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.36336144580000002" green="0.26422910799999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="PJb-yO-Pvb" firstAttribute="leading" secondItem="0v4-JM-Asq" secondAttribute="leading" constant="32" id="0Ob-Lb-koh"/>
                             <constraint firstItem="1Cz-wV-RwF" firstAttribute="top" secondItem="0v4-JM-Asq" secondAttribute="top" constant="61" id="274-mg-Fdu"/>
                             <constraint firstItem="yKh-pI-Xwh" firstAttribute="height" secondItem="7VI-i4-1ZP" secondAttribute="height" id="3ER-TW-XOp"/>
                             <constraint firstItem="uwx-5R-fS9" firstAttribute="top" secondItem="yKh-pI-Xwh" secondAttribute="bottom" constant="21" id="3xF-CS-cBN"/>
@@ -169,8 +176,11 @@
                             <constraint firstItem="e5y-p1-vwx" firstAttribute="width" secondItem="1Cz-wV-RwF" secondAttribute="width" id="ZuN-Hq-CgB"/>
                             <constraint firstItem="7VI-i4-1ZP" firstAttribute="height" secondItem="e5y-p1-vwx" secondAttribute="height" id="c0t-Vh-HUm"/>
                             <constraint firstItem="1Cz-wV-RwF" firstAttribute="leading" secondItem="0v4-JM-Asq" secondAttribute="leading" constant="32" id="d6H-34-Ipr"/>
+                            <constraint firstItem="PJb-yO-Pvb" firstAttribute="centerX" secondItem="0v4-JM-Asq" secondAttribute="centerX" id="fjC-9O-uzm"/>
                             <constraint firstItem="e5y-p1-vwx" firstAttribute="top" secondItem="1Cz-wV-RwF" secondAttribute="bottom" constant="21" id="hil-f3-NVL"/>
+                            <constraint firstItem="PJb-yO-Pvb" firstAttribute="top" secondItem="uwx-5R-fS9" secondAttribute="bottom" constant="30" id="icZ-Ue-rRU"/>
                             <constraint firstItem="uwx-5R-fS9" firstAttribute="height" secondItem="yKh-pI-Xwh" secondAttribute="height" id="jYQ-41-8Cc"/>
+                            <constraint firstItem="0v4-JM-Asq" firstAttribute="trailing" secondItem="PJb-yO-Pvb" secondAttribute="trailing" constant="32" id="kje-OW-nkH"/>
                             <constraint firstItem="ckP-ae-8ma" firstAttribute="centerX" secondItem="0v4-JM-Asq" secondAttribute="centerX" id="lsy-Mp-9vg"/>
                             <constraint firstItem="7VI-i4-1ZP" firstAttribute="leading" secondItem="e5y-p1-vwx" secondAttribute="leading" id="vA9-Np-2f3"/>
                             <constraint firstItem="7VI-i4-1ZP" firstAttribute="width" secondItem="e5y-p1-vwx" secondAttribute="width" id="vJy-2X-84P"/>
@@ -180,6 +190,7 @@
                     <navigationItem key="navigationItem" id="Xb4-6C-zc8"/>
                     <connections>
                         <outlet property="contactNoTxt" destination="7VI-i4-1ZP" id="ZH7-h5-2YQ"/>
+                        <outlet property="errorLbl" destination="PJb-yO-Pvb" id="7yB-6G-Nba"/>
                         <outlet property="firstNameTxt" destination="1Cz-wV-RwF" id="WPR-Ve-dfO"/>
                         <outlet property="lastNameTxt" destination="e5y-p1-vwx" id="wNt-gx-3uJ"/>
                         <outlet property="passwordTxt" destination="uwx-5R-fS9" id="Ucf-Ec-XmY"/>
