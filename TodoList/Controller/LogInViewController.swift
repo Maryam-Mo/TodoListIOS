@@ -13,16 +13,29 @@ class LoginViewController: UIViewController {
     // Mark: Properties
     @IBOutlet weak var userNameTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
-    
+    @IBOutlet weak var errorLbl: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        errorLbl.isHidden = true
     }
     
 
     @IBAction func login(_ sender: UIButton) {
 
+        errorLbl.isHidden = true
+        guard let userName = userNameTxt.text, userNameTxt.text?.count != 0 else {
+            errorLbl.isHidden = false
+            errorLbl.text = "Please enter your username"
+            return
+        }
+        
+        guard let password = passwordTxt.text, passwordTxt.text?.count != 0 else {
+            errorLbl.isHidden = false
+            errorLbl.text = "Please enter your password"
+            return
+        }
 //        let alert = UIAlertController(title: "Login", message: "You are login now!", preferredStyle: UIAlertController.Style.alert)
 //
 //

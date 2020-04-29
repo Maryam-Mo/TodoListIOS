@@ -62,23 +62,34 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQx-l1-oA1">
+                                <rect key="frame" x="32" y="191" width="350" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.36336144580366758" green="0.26422910801590416" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="QtJ-Ff-FqL" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="58r-v9-4Un"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vQx-l1-oA1" secondAttribute="trailing" constant="32" id="5rY-ag-eQd"/>
                             <constraint firstItem="iBK-pk-Ry0" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="9tW-ha-0yX"/>
+                            <constraint firstItem="vQx-l1-oA1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Ood-eP-ksL"/>
                             <constraint firstItem="ofI-Rf-Pb1" firstAttribute="height" secondItem="QtJ-Ff-FqL" secondAttribute="height" id="VcX-B6-cgC"/>
+                            <constraint firstItem="vQx-l1-oA1" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="VpV-mD-ZhQ"/>
                             <constraint firstItem="ofI-Rf-Pb1" firstAttribute="top" secondItem="QtJ-Ff-FqL" secondAttribute="bottom" constant="19" id="ap6-2I-xC6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="QtJ-Ff-FqL" secondAttribute="trailing" constant="32" id="dEP-yp-9oH"/>
                             <constraint firstItem="QtJ-Ff-FqL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="ebn-Lu-e3o"/>
                             <constraint firstItem="ofI-Rf-Pb1" firstAttribute="width" secondItem="QtJ-Ff-FqL" secondAttribute="width" id="lOd-Sk-Nbz"/>
                             <constraint firstItem="iBK-pk-Ry0" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nDn-bp-9vb"/>
                             <constraint firstItem="QtJ-Ff-FqL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="r6H-hp-0nJ"/>
+                            <constraint firstItem="vQx-l1-oA1" firstAttribute="top" secondItem="ofI-Rf-Pb1" secondAttribute="bottom" constant="20" id="xBi-rP-qnj"/>
                             <constraint firstItem="ofI-Rf-Pb1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="z08-dg-ea6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="errorLbl" destination="vQx-l1-oA1" id="EFr-06-oS0"/>
                         <outlet property="passwordTxt" destination="ofI-Rf-Pb1" id="l3I-Uh-NJQ"/>
                         <outlet property="userNameTxt" destination="QtJ-Ff-FqL" id="PRW-Kc-quh"/>
                         <segue destination="gZA-Lu-xgQ" kind="show" identifier="openRegisterPage" id="le4-eT-bL8"/>
@@ -87,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="68" y="351"/>
+            <point key="canvasLocation" x="66.666666666666671" y="350.89285714285711"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="YkN-wd-z03">
@@ -183,11 +194,11 @@
             <objects>
                 <viewController id="fQi-Ml-0Dr" customClass="CategoryViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rS2-TR-xor">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGh-OP-rma">
-                                <rect key="frame" x="356" y="98" width="30" height="36"/>
+                                <rect key="frame" x="356" y="10" width="30" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="14W-uW-dVn"/>
                                     <constraint firstAttribute="height" constant="36" id="kjJ-hO-ezX"/>
@@ -201,7 +212,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GiV-6Y-ZMN">
-                                <rect key="frame" x="0.0" y="128" width="414" height="734"/>
+                                <rect key="frame" x="0.0" y="40" width="414" height="768"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CategoryCell" id="gYf-u1-m1W">
@@ -241,11 +252,11 @@
             <objects>
                 <viewController id="JIM-Es-N3I" customClass="TodoViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xhd-jJ-mnZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="keb-0z-9HU">
-                                <rect key="frame" x="0.0" y="128" width="414" height="734"/>
+                                <rect key="frame" x="0.0" y="40" width="414" height="768"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodoCell" id="97d-co-seS">
@@ -259,7 +270,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5c-e8-Un4">
-                                <rect key="frame" x="356" y="98" width="30" height="36"/>
+                                <rect key="frame" x="356" y="10" width="30" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Cpo-L9-iPs"/>
                                     <constraint firstAttribute="height" constant="36" id="YqL-Wx-4eL"/>
@@ -300,16 +311,16 @@
             <objects>
                 <viewController id="pkv-01-ZmW" customClass="TodoFormViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0IS-it-Rjb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lZD-0z-Zf4">
-                                <rect key="frame" x="32" y="158" width="350" height="34"/>
+                                <rect key="frame" x="32" y="70" width="350" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPo-bH-5ya">
-                                <rect key="frame" x="149.5" y="510" width="115" height="52"/>
+                                <rect key="frame" x="149.5" y="456" width="115" height="52"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="SVn-1r-4TU"/>
@@ -365,6 +376,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QVO-qV-vwo"/>
+        <segue reference="OS7-0N-X5v"/>
     </inferredMetricsTieBreakers>
 </document>
