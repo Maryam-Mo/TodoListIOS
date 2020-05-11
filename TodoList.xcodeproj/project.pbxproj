@@ -20,6 +20,7 @@
 		B2620A9723FD1C7200021642 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9623FD1C7200021642 /* Assets.xcassets */; };
 		B2620A9A23FD1C7200021642 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9823FD1C7200021642 /* LaunchScreen.storyboard */; };
 		B2901FE7243C1083000F7F90 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901FE6243C1083000F7F90 /* RegisterViewController.swift */; };
+		B293B54224696AFE003AA4D5 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293B54124696AFE003AA4D5 /* SwipeTableViewController.swift */; };
 		BF87306F719E144CD089F192 /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79BBF93A83FEAD346B6027C /* Pods_TodoList.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		B2620A9923FD1C7200021642 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2620A9B23FD1C7200021642 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2901FE6243C1083000F7F90 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		B293B54124696AFE003AA4D5 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				B248F00C245088E800E6DDD7 /* CategoryViewController.swift */,
 				B215D8002457C3A500CBC78D /* TodoViewController.swift */,
 				B215D8042457CFD600CBC78D /* TodoFormViewController.swift */,
+				B293B54124696AFE003AA4D5 /* SwipeTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			files = (
 				B215D8052457CFD600CBC78D /* TodoFormViewController.swift in Sources */,
 				B215D8072457D12D00CBC78D /* TodoDataModel.swift in Sources */,
+				B293B54224696AFE003AA4D5 /* SwipeTableViewController.swift in Sources */,
 				B237D67A2431913700991B24 /* UserDataModel.swift in Sources */,
 				B2901FE7243C1083000F7F90 /* RegisterViewController.swift in Sources */,
 				B215D8012457C3A500CBC78D /* TodoViewController.swift in Sources */,

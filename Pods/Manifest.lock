@@ -7,12 +7,14 @@ PODS:
   - RealmSwift (4.4.1):
     - Realm (= 4.4.1)
   - SwiftyJSON (5.0.0)
+  - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
   - Alamofire
   - ObjectMapper (~> 3.5)
   - RealmSwift
   - SwiftyJSON
+  - SwipeCellKit
 
 SPEC REPOS:
   trunk:
@@ -21,6 +23,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SwiftyJSON
+    - SwipeCellKit
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -28,7 +31,8 @@ SPEC CHECKSUMS:
   Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
   RealmSwift: 3eb8924ff7100df5928c7602f71d0fec51e7c9c5
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: d4e591d39877fffdd4db4e27ce036147da570897
+PODFILE CHECKSUM: 943cd19a0e52f1a86aa317f144e5acc49ee7d987
 
 COCOAPODS: 1.9.1
