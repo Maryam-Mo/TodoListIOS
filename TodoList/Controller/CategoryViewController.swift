@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CategoryViewController: UIViewController {
     
     @IBOutlet weak var categoryTableView: UITableView!
     
-    
+    let realm = try! Realm()
+
     var categoryArray = [CategoryDataModel]()
     var user: UserDataModel?
     var selectedCategory: CategoryDataModel?

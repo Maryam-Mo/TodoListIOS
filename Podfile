@@ -6,4 +6,5 @@ target 'TodoList' do
     pod 'Alamofire'
     pod 'SwiftyJSON'
     pod 'RealmSwift'
+    pod 'ObjectMapper', '~> 3.5'
 end

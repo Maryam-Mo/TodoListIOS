@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LoginViewController: UIViewController {
     
-    // Mark: Properties
+    // MARK: - Properties
     @IBOutlet weak var userNameTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var errorLbl: UILabel!
     
+    let realm = try! Realm()
+    var loginUser: [UserDataModel]?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLbl.isHidden = true
@@ -28,40 +32,39 @@ class LoginViewController: UIViewController {
         validateUserName()
         validatePassword()
 
-//
-//        performSegue(withIdentifier: "openCategoryPage", sender: self)
-        
+        login()
+                
     
-        let session = URLSession.shared
-        let url = URL(string: "http://192.168.1.5:8080/api/user/login")!
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let json = [
-            "userName": "\(userNameTxt.text)",
-            "password": "\(passwordTxt.text)"
-        ]
-
-        let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
-
-        let task = session.uploadTask(with: request, from: jsonData) { data, response, error in
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-//                    let responseInfo = try JSONDecoder().decode(loginResponse.self, from: data)
-                    print(dataString)
-                    let alert = UIAlertController(title: "Login", message: "You are login now!", preferredStyle: UIAlertController.Style.alert)
-
-
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-
-                    self.present(alert, animated: true, completion: nil)
-            }
-            
-        }
-
-        task.resume()
+//        let session = URLSession.shared
+//        let url = URL(string: "http://192.168.1.5:8080/api/user/login")!
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//        let json = [
+//            "userName": "\(userNameTxt.text)",
+//            "password": "\(passwordTxt.text)"
+//        ]
+//
+//        let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
+//
+//        let task = session.uploadTask(with: request, from: jsonData) { data, response, error in
+//            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+////                    let responseInfo = try JSONDecoder().decode(loginResponse.self, from: data)
+//                    print(dataString)
+//                    let alert = UIAlertController(title: "Login", message: "You are login now!", preferredStyle: UIAlertController.Style.alert)
+//
+//
+//                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+//
+//                    self.present(alert, animated: true, completion: nil)
+//            }
+//
+//        }
+//
+//        task.resume()
     }
     
     func validateUserName() {
@@ -80,6 +83,18 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func login() {
+        let predicate = NSPredicate(format: "userName = %@ AND password = %@", userNameTxt.text!, passwordTxt.text!)
+        loginUser = realm.objects(UserDataModel.self).filter(predicate).array
+        if loginUser != nil {
+            performSegue(withIdentifier: "openCategoryPage", sender: self)
+        } else {
+            let alert = UIAlertController(title: "Login", message: "The username or password is not correct!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     
     @IBAction func register(_ sender: Any) {
         performSegue(withIdentifier: "openRegisterPage", sender: self)
@@ -88,14 +103,28 @@ class LoginViewController: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let user = UserDataModel(id: 1, firstName: "aa", lastName: "bb", contactNo: "123", userName: "admin", password: "admin")
-        print(user.firstName)
-
         if segue.identifier == "openCategoryPage" {
             if let target = segue.destination as? CategoryViewController {
-                target.user = user
+                target.user = loginUser![0]
             }
         }
+    }
+}
+
+extension Results {
+    func toArray<T>(ofType: T.Type) -> [T] {
+        var array = [T]()
+        for i in 0 ..< count {
+            if let result = self[i] as? T {
+                array.append(result)
+            }
+        }
+
+        return array
+    }
+    
+    var array: [Element]? {
+        return self.count > 0 ? self.map { $0 } : nil
     }
 }
 
