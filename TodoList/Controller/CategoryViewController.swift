@@ -92,19 +92,21 @@ extension CategoryViewController {
 
     //MARK: - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCategory = categories?[indexPath.row]
-//        performSegue(withIdentifier: "openTodoPage", sender: self)
+        if let exist = categories?[indexPath.row] {
+            selectedCategory = exist
+            performSegue(withIdentifier: "openTodoPage", sender: self)
+        }
     }
     
         
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //
-    //        if segue.identifier == "openTodoPage" {
-    //            if let target = segue.destination as? TodoViewController {
-    //                target.selectedCategory = self.selectedCategory
-    //            }
-    //        }
-    //    }
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+            if segue.identifier == "openTodoPage" {
+                if let target = segue.destination as? TodoViewController {
+                    target.selectedCategory = selectedCategory
+                }
+            }
+        }
 
 }
 
