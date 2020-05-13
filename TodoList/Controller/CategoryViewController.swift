@@ -59,10 +59,10 @@ class CategoryViewController: SwipeTableViewController {
         }
         
         override func updateModel(at indexPath: IndexPath) {
-            if let category = self.categories?[indexPath.row] {
+            if let category = categories?[indexPath.row] {
                 do {
-                    try self.realm.write {
-                        self.realm.delete(category)
+                    try realm.write {
+                        realm.delete(category)
                     }
                     loadCategories()
                 } catch {

@@ -13,6 +13,6 @@ class CategoryDataModel: Object{
     
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
-//    let items = List<ToroDataModel>()
+    let items = List<TodoDataModel>()
 
 }

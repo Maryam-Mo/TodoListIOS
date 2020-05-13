@@ -7,30 +7,13 @@
 //
 
 import Foundation
+import RealmSwift
 
-class TodoDataModel {
+class TodoDataModel: Object {
     
-    var id: Int?
-    var name: String
-    var status: String
-    var category: CategoryDataModel?
-
-
-    init(id: Int, name: String, status: String, category: CategoryDataModel) {
-        self.id = id
-        self.name = name
-        self.status = status
-        self.category = category
-    }
-
-    init(name: String, status: String, category: CategoryDataModel) {
-        self.name = name
-        self.status = status
-        self.category = category
-    }
-    
-    init(name: String, status: String) {
-        self.name = name
-        self.status = status
-    }
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var status: String = Status.StatusEnum.NEW.rawValue
+    @objc dynamic var CreatedIn: String  = ""
+    var parentCategory = LinkingObjects(fromType: CategoryDataModel.self, property: "items")
 }

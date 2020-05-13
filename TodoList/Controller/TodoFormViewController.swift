@@ -18,10 +18,9 @@ class TodoFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if todo != nil {
-            nameTxt.text = todo?.name
+        if let selectedTodo = todo {
+            nameTxt.text = selectedTodo.name
         }
-        // Do any additional setup after loading the view.
     }
     
 
@@ -35,8 +34,14 @@ class TodoFormViewController: UIViewController {
     */
 
     @IBAction func create(_ sender: Any) {
-        let todo = TodoDataModel(name: nameTxt.text!, status: "NEW")
-        delegate?.todoReceived(todo: todo)
+        if let currentTodo = todo {
+            currentTodo.name = nameTxt.text!
+            delegate?.todoReceived(todo: currentTodo)
+        } else {
+            let currentTodo = TodoDataModel()
+            currentTodo.name = nameTxt.text!
+            delegate?.todoReceived(todo: currentTodo)
+        }
         self.dismiss(animated: true, completion: nil)
     }
 

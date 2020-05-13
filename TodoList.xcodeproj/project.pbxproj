@@ -19,6 +19,7 @@
 		B2620A9523FD1C5F00021642 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9323FD1C5F00021642 /* Main.storyboard */; };
 		B2620A9723FD1C7200021642 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9623FD1C7200021642 /* Assets.xcassets */; };
 		B2620A9A23FD1C7200021642 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9823FD1C7200021642 /* LaunchScreen.storyboard */; };
+		B278D9BD246BF4FE00DAA006 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = B278D9BC246BF4FE00DAA006 /* Status.swift */; };
 		B2901FE7243C1083000F7F90 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901FE6243C1083000F7F90 /* RegisterViewController.swift */; };
 		B293B54224696AFE003AA4D5 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293B54124696AFE003AA4D5 /* SwipeTableViewController.swift */; };
 		BF87306F719E144CD089F192 /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79BBF93A83FEAD346B6027C /* Pods_TodoList.framework */; };
@@ -42,6 +43,7 @@
 		B2620A9623FD1C7200021642 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2620A9923FD1C7200021642 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2620A9B23FD1C7200021642 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B278D9BC246BF4FE00DAA006 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		B2901FE6243C1083000F7F90 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B293B54124696AFE003AA4D5 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +121,7 @@
 		B2620A8C23FD1C5F00021642 /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				B278D9BB246BF4DE00DAA006 /* Commons */,
 				B2620A8D23FD1C5F00021642 /* AppDelegate.swift */,
 				B24ECE9023FFF1FA00250584 /* Model */,
 				B24ECE8F23FFF1DF00250584 /* Controller */,
@@ -129,6 +132,14 @@
 				B2620A9B23FD1C7200021642 /* Info.plist */,
 			);
 			path = TodoList;
+			sourceTree = "<group>";
+		};
+		B278D9BB246BF4DE00DAA006 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				B278D9BC246BF4FE00DAA006 /* Status.swift */,
+			);
+			path = Commons;
 			sourceTree = "<group>";
 		};
 		F35988479E94E21DA0769A15 /* Frameworks */ = {
@@ -265,6 +276,7 @@
 				B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */,
 				B248F00D245088E800E6DDD7 /* CategoryViewController.swift in Sources */,
 				B2620A9023FD1C5F00021642 /* SceneDelegate.swift in Sources */,
+				B278D9BD246BF4FE00DAA006 /* Status.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
