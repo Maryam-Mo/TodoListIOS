@@ -79,7 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				B2620A9123FD1C5F00021642 /* LogInViewController.swift */,
-				B2620A8D23FD1C5F00021642 /* AppDelegate.swift */,
 				B2901FE6243C1083000F7F90 /* RegisterViewController.swift */,
 				B248F00C245088E800E6DDD7 /* CategoryViewController.swift */,
 				B215D8002457C3A500CBC78D /* TodoViewController.swift */,
@@ -120,6 +119,7 @@
 		B2620A8C23FD1C5F00021642 /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				B2620A8D23FD1C5F00021642 /* AppDelegate.swift */,
 				B24ECE9023FFF1FA00250584 /* Model */,
 				B24ECE8F23FFF1DF00250584 /* Controller */,
 				B24ECE8E23FFECF200250584 /* View */,

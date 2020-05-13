@@ -24,6 +24,12 @@ class LoginViewController: UIViewController {
         errorLbl.isHidden = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        clearTextFields()
+        DispatchQueue.main.async {
+            self.passwordTxt.resignFirstResponder()
+        }
+    }
 
     @IBAction func login(_ sender: UIButton) {
 
@@ -109,19 +115,14 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    func clearTextFields() {
+        userNameTxt.text = ""
+        passwordTxt.text = ""
+    }
 }
 
 extension Results {
-    func toArray<T>(ofType: T.Type) -> [T] {
-        var array = [T]()
-        for i in 0 ..< count {
-            if let result = self[i] as? T {
-                array.append(result)
-            }
-        }
-
-        return array
-    }
     
     var array: [Element]? {
         return self.count > 0 ? self.map { $0 } : nil

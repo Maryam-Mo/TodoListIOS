@@ -41,11 +41,11 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         return [deleteAction]
     }
     
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive
-        return options
-    }
+//    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+//        var options = SwipeOptions()
+//        options.expansionStyle = .destructive
+//        return options
+//    }
     
     func updateModel(at indexPath: IndexPath) {
         // Update our data model

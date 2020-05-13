@@ -7,22 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
-class CategoryDataModel{
+class CategoryDataModel: Object{
     
-    var id: Int?
-    var name: String
-    var user: UserDataModel
-    
-    
-    init(id: Int, name: String, user: UserDataModel) {
-        self.id = id
-        self.name = name
-        self.user = user
-    }
-    
-    init(name: String, user: UserDataModel) {
-        self.name = name
-        self.user = user
-    }
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+//    let items = List<ToroDataModel>()
+
 }

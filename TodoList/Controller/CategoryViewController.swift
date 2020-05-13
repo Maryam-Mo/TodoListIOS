@@ -13,71 +13,100 @@ class CategoryViewController: SwipeTableViewController {
         
     let realm = try! Realm()
 
-//    var categoryArray = Results<CategoryDataModel>?
+    var categories: [CategoryDataModel]?
     var user: UserDataModel?
     var selectedCategory: CategoryDataModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    
-        categoryArray.append(CategoryDataModel(name: "cat1", user: user!))
-
+        loadCategories()
+//        tableView.separatorStyle = .none
     }
     
-//    @IBAction func create(_ sender: Any) {
-//        let alert = UIAlertController(title: "Create a category", message: "Enter a name for the category", preferredStyle: .alert)
-//
-//        alert.addTextField()
-//
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-//            let textField = alert?.textFields![0]
-//            self.categoryArray.insert(CategoryDataModel(name: textField!.text!, user: self.user!), at: 0)
-//            self.categoryTableView.beginUpdates()
-//            self.categoryTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
-//            self.categoryTableView.endUpdates()
-//        }))
-//
-//        self.present(alert, animated: true, completion: nil)
-////            self.categoryTableView.reloadData()
-//
-//
-//    }
+    //MARK: - Add New Categories
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            let category = CategoryDataModel()
+            category.name = textField.text!
+            self.save(category: category)
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create a new category"
+            textField = alertTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if segue.identifier == "openTodoPage" {
-            if let target = segue.destination as? TodoViewController {
-                target.selectedCategory = self.selectedCategory
+        //MARK: - Data Manipulation Methods
+        func save(category: CategoryDataModel) {
+            do {
+                try realm.write{
+                    realm.add(category)
+                }
+            } catch {
+                print("Error saving category \(error)")
+            }
+            loadCategories()
+        }
+        
+        func loadCategories() {
+            categories = realm.objects(CategoryDataModel.self).array
+            tableView.reloadData()
+        }
+        
+        override func updateModel(at indexPath: IndexPath) {
+            if let category = self.categories?[indexPath.row] {
+                do {
+                    try self.realm.write {
+                        self.realm.delete(category)
+                    }
+                    loadCategories()
+                } catch {
+                    print("The selected category can't be deleted, \(error)")
+                }
             }
         }
     }
-    
-}
+
+
 
 //MARK: - TableView Datasource Methods
-//extension CategoryViewController {
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return categoryArray?.count ?? 1
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-//        cell.textLabel?.text = categoryArray[indexPath.row].name
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        categoryArray.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        selectedCategory = categoryArray[indexPath.row]
+extension CategoryViewController {
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories?.count ?? 1
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let category = categories?[indexPath.row] {
+            cell.textLabel?.text = category.name
+        }
+        return cell
+    }
+
+    //MARK: - TableView Delegate Methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCategory = categories?[indexPath.row]
 //        performSegue(withIdentifier: "openTodoPage", sender: self)
-//    }
-//
-//}
+    }
+    
+        
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //
+    //        if segue.identifier == "openTodoPage" {
+    //            if let target = segue.destination as? TodoViewController {
+    //                target.selectedCategory = self.selectedCategory
+    //            }
+    //        }
+    //    }
+
+}
 
 
 
