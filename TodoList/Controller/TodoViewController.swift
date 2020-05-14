@@ -11,6 +11,8 @@ import RealmSwift
 
 class TodoViewController: SwipeTableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let realm = try! Realm()
     
     var todos: [TodoDataModel]?
@@ -124,4 +126,21 @@ extension TodoViewController {
         }
     }
 
+}
+
+extension TodoViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        todos = todos?.filter { $0.name.contains(searchBar.text!)
+        }
+        tableView.reloadData()
+    }
+   
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            reloadData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
 }
