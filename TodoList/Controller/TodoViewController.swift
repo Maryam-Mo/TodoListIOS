@@ -15,12 +15,10 @@ class TodoViewController: SwipeTableViewController {
     
     var todos: [TodoDataModel]?
     var selectedTodo: TodoDataModel?
-    var onUpdate: Bool = false
-    var selectedTodoIndex: Int?
     var selectedCategory: CategoryDataModel? {
-           didSet {
-            reloadData()
-           }
+       didSet {
+        reloadData()
+       }
     }
     
     override func viewDidLoad() {
@@ -46,7 +44,7 @@ class TodoViewController: SwipeTableViewController {
                     }
                     self.reloadData()
                 } catch {
-                    print("Error saving new todo \(error)")
+                    print("Error in saving new todo \(error)")
                 }
             }
         }
@@ -81,6 +79,7 @@ class TodoViewController: SwipeTableViewController {
                 try realm.write() {
                     realm.delete(item)
                 }
+                reloadData()
             } catch {
                 print("The selected todo can't be deleted, \(error)")
             }
@@ -90,12 +89,7 @@ class TodoViewController: SwipeTableViewController {
 
 extension TodoViewController: CanRecieveDelegate {
     func todoReceived(todo: TodoDataModel) {
-        if onUpdate {
-//            save
-            self.todos?[selectedTodoIndex!] = todo
-        } else {
-            self.todos?.insert(todo, at: 0)
-        }
+        reloadData()
     }
 }
 
@@ -117,7 +111,6 @@ extension TodoViewController {
     // MARK: - Tableview Delegate method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTodo = todos?[indexPath.row]
-        selectedTodoIndex = indexPath.row
         performSegue(withIdentifier: "openAddTodoPage", sender: self)
     }
     
@@ -126,8 +119,6 @@ extension TodoViewController {
             let target = segue.destination as? TodoFormViewController
             if selectedTodo != nil {
                 target?.todo = selectedTodo
-                onUpdate = true
-                selectedTodo = nil
             }
             target?.delegate = self
         }

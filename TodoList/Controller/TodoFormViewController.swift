@@ -7,42 +7,38 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TodoFormViewController: UIViewController {
+    
+    let realm = try! Realm()
 
     @IBOutlet weak var nameTxt: UITextField!
     
-    var todo: TodoDataModel?
     var delegate : CanRecieveDelegate?
-
+    var todo: TodoDataModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let selectedTodo = todo {
-            nameTxt.text = selectedTodo.name
+        if let currentTodo = todo {
+            nameTxt.text = currentTodo.name
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    */
 
     @IBAction func create(_ sender: Any) {
-        if let currentTodo = todo {
-            currentTodo.name = nameTxt.text!
-            delegate?.todoReceived(todo: currentTodo)
-        } else {
-            let currentTodo = TodoDataModel()
-            currentTodo.name = nameTxt.text!
-            delegate?.todoReceived(todo: currentTodo)
+        if let updatedTodo = todo {
+            do {
+                try realm.write() {
+                    updatedTodo.name = nameTxt.text!
+                    updatedTodo.status = todo!.status
+                }
+                delegate?.todoReceived(todo: updatedTodo)
+                self.navigationController?.popViewController(animated: true)
+
+            } catch {
+                print("Error in updating the todo, \(error)")
+            }
         }
-        self.dismiss(animated: true, completion: nil)
     }
 
 }
