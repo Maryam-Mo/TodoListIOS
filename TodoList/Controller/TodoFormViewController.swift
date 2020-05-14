@@ -11,6 +11,8 @@ import RealmSwift
 
 class TodoFormViewController: UIViewController {
     
+    @IBOutlet weak var locationLbl: UILabel!
+    
     let realm = try! Realm()
 
     @IBOutlet weak var nameTxt: UITextField!
@@ -22,6 +24,7 @@ class TodoFormViewController: UIViewController {
         super.viewDidLoad()
         if let currentTodo = todo {
             nameTxt.text = currentTodo.name
+            locationLbl.text! += "\n" + currentTodo.createdIn
         }
     }
 

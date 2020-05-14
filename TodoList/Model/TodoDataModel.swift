@@ -14,6 +14,6 @@ class TodoDataModel: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var status: String = Status.StatusEnum.NEW.rawValue
-    @objc dynamic var CreatedIn: String  = ""
+    @objc dynamic var createdIn: String  = ""
     var parentCategory = LinkingObjects(fromType: CategoryDataModel.self, property: "items")
 }

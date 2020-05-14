@@ -8,13 +8,17 @@
 
 import UIKit
 import RealmSwift
+import CoreLocation
 
-class TodoViewController: SwipeTableViewController {
+class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
     let realm = try! Realm()
-    
+    static let geoCoder = CLGeocoder()
+
+    var location: String = ""
+    let locationManager = CLLocationManager()
     var todos: [TodoDataModel]?
     var selectedTodo: TodoDataModel?
     var selectedCategory: CategoryDataModel? {
@@ -25,6 +29,11 @@ class TodoViewController: SwipeTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //TODO: Set up the location manager
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +51,7 @@ class TodoViewController: SwipeTableViewController {
                         let todo = TodoDataModel()
                         todo.name = textField.text!
                         todo.status = Status.StatusEnum.NEW.rawValue
+                        todo.createdIn = self.location
                         currentCategory.items.append(todo)
                     }
                     self.reloadData()
@@ -87,6 +97,26 @@ class TodoViewController: SwipeTableViewController {
             }
         }
     }
+    
+    //MARK: - Location Manager Delegate Methods
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let lastLocation = locations[locations.count - 1] // Last location in this array is the most accurate one
+        if lastLocation.horizontalAccuracy > 0 { // As soon as the result has high accuracy we will stop updating the location
+            locationManager.stopUpdatingLocation()
+        }
+         let clLocation = CLLocation(latitude: lastLocation.coordinate.latitude, longitude: lastLocation.coordinate.longitude)
+        TodoViewController.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
+          if let place = placemarks?.first {
+            let result = "\(place)".split(separator: "@")
+            self.location = String(result[0])
+          }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location Unavailable, \(error)")
+    }
+    
 }
 
 extension TodoViewController: CanRecieveDelegate {
@@ -128,6 +158,7 @@ extension TodoViewController {
 
 }
 
+//MARK: - Search Bar methods
 extension TodoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         todos = todos?.filter { $0.name.contains(searchBar.text!)
