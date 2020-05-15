@@ -134,7 +134,8 @@ extension TodoViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let todo = todos?[indexPath.row] {
-            cell.textLabel?.text = todo.name
+            cell.textLabel?.text = "\(todo.name)(\(todo.status))"
+            cell.accessoryType = todo.status == Status.StatusEnum.COMPLETED.rawValue ? .checkmark : .none
         } else {
            cell.textLabel?.text = "No Items Added Yet"
         }
@@ -143,7 +144,13 @@ extension TodoViewController {
     // MARK: - Tableview Delegate method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTodo = todos?[indexPath.row]
-        performSegue(withIdentifier: "openAddTodoPage", sender: self)
+        if selectedTodo!.status != Status.StatusEnum.COMPLETED.rawValue {
+            performSegue(withIdentifier: "openAddTodoPage", sender: self)
+        } else {
+            let alert = UIAlertController(title: "Can't update a completed todo", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

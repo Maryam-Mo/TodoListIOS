@@ -12,6 +12,7 @@ import RealmSwift
 class TodoFormViewController: UIViewController {
     
     @IBOutlet weak var locationLbl: UILabel!
+    @IBOutlet weak var picker: UIPickerView!
     
     let realm = try! Realm()
 
@@ -19,6 +20,7 @@ class TodoFormViewController: UIViewController {
     
     var delegate : CanRecieveDelegate?
     var todo: TodoDataModel?
+    var statuses: [String] = [Status.StatusEnum.IN_PROGRESS.rawValue, Status.StatusEnum.COMPLETED.rawValue]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,8 @@ class TodoFormViewController: UIViewController {
             nameTxt.text = currentTodo.name
             locationLbl.text! += "\n" + currentTodo.createdIn
         }
+        picker.delegate = self
+        picker.dataSource = self
     }
 
     @IBAction func create(_ sender: Any) {
@@ -33,7 +37,8 @@ class TodoFormViewController: UIViewController {
             do {
                 try realm.write() {
                     updatedTodo.name = nameTxt.text!
-                    updatedTodo.status = todo!.status
+                    print(picker.selectedRow(inComponent: 0))
+                    updatedTodo.status = statuses[picker.selectedRow(inComponent: 0)]
                 }
                 delegate?.todoReceived(todo: updatedTodo)
                 self.navigationController?.popViewController(animated: true)
@@ -49,4 +54,20 @@ class TodoFormViewController: UIViewController {
 
 protocol CanRecieveDelegate {
     func todoReceived(todo: TodoDataModel)
+}
+
+extension TodoFormViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return statuses[row]
+    }
+
 }
