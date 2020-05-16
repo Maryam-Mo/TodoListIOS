@@ -13,6 +13,9 @@ import CoreLocation
 class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var selectBtn: UIBarButtonItem!
+    @IBOutlet weak var inProgressStatusBtn: UIBarButtonItem!
+    @IBOutlet weak var completedStatusBtn: UIBarButtonItem!
     
     let realm = try! Realm()
     static let geoCoder = CLGeocoder()
@@ -21,6 +24,7 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var todos: [TodoDataModel]?
     var selectedTodo: TodoDataModel?
+    var selectedTodos: [TodoDataModel]?
     var selectedCategory: CategoryDataModel? {
        didSet {
         reloadData()
@@ -30,6 +34,8 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //TODO: Set up the location manager
+        inProgressStatusBtn.title = ""
+        completedStatusBtn.title = ""
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.requestWhenInUseAuthorization()
@@ -66,6 +72,68 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
         }
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func selectButtonPressed(_ sender: UIBarButtonItem) {
+        if selectBtn.title == "Select" {
+            selectBtn.title = "Cancel"
+            selectedTodos = []
+            title = ""
+            inProgressStatusBtn.title = "In Progress"
+            completedStatusBtn.title = "Completed"
+            tableView.allowsMultipleSelectionDuringEditing = true
+            tableView.setEditing(true, animated: false)
+        } else {
+            selectBtn.title = "Select"
+            title = selectedCategory?.name
+            inProgressStatusBtn.title = ""
+            completedStatusBtn.title = ""
+            tableView.allowsMultipleSelectionDuringEditing = false
+            tableView.setEditing(false, animated: false)
+        }
+    }
+    
+    @IBAction func inProgressStatusButtonPressed(_ sender: UIBarButtonItem) {
+        selectBtn.title = "Select"
+        title = selectedCategory?.name
+        inProgressStatusBtn.title = ""
+        completedStatusBtn.title = ""
+        tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.setEditing(false, animated: false)
+        if let todos = selectedTodos {
+            for todo in todos {
+                do {
+                    try self.realm.write {
+                        todo.status = Status.StatusEnum.IN_PROGRESS.rawValue
+                    }
+                } catch {
+                    print("Error in saving new todo \(error)")
+                }
+            }
+        }
+        reloadData()
+    }
+    
+    
+    @IBAction func completedStatusButtonPressed(_ sender: UIBarButtonItem) {
+        selectBtn.title = "Select"
+        title = selectedCategory?.name
+        inProgressStatusBtn.title = ""
+        completedStatusBtn.title = ""
+        tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.setEditing(false, animated: false)
+        if let todos = selectedTodos {
+            for todo in todos {
+                do {
+                    try self.realm.write {
+                        todo.status = Status.StatusEnum.COMPLETED.rawValue
+                    }
+                } catch {
+                    print("Error in saving new todo \(error)")
+                }
+            }
+        }
+        reloadData()
     }
     
     // MARK: - Data Manipulation Methods
@@ -135,7 +203,7 @@ extension TodoViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let todo = todos?[indexPath.row] {
             cell.textLabel?.text = "\(todo.name)(\(todo.status))"
-            cell.accessoryType = todo.status == Status.StatusEnum.COMPLETED.rawValue ? .checkmark : .none
+            cell.accessoryType = todo.status == Status.StatusEnum.COMPLETED.rawValue ? .checkmark : .disclosureIndicator
         } else {
            cell.textLabel?.text = "No Items Added Yet"
         }
@@ -144,12 +212,23 @@ extension TodoViewController {
     // MARK: - Tableview Delegate method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTodo = todos?[indexPath.row]
-        if selectedTodo!.status != Status.StatusEnum.COMPLETED.rawValue {
-            performSegue(withIdentifier: "openAddTodoPage", sender: self)
+        if (tableView.allowsMultipleSelectionDuringEditing) {
+            if selectedTodo!.status != Status.StatusEnum.COMPLETED.rawValue {
+                selectedTodos?.append(selectedTodo!)
+            } else {
+                tableView.deselectRow(at: indexPath, animated: true)
+                let alert = UIAlertController(title: "Can't update a completed todo", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
         } else {
-            let alert = UIAlertController(title: "Can't update a completed todo", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+            if selectedTodo!.status != Status.StatusEnum.COMPLETED.rawValue {
+                performSegue(withIdentifier: "openAddTodoPage", sender: self)
+            } else {
+                let alert = UIAlertController(title: "Can't update a completed todo", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
         }
     }
     

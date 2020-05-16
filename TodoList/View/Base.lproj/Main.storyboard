@@ -241,7 +241,7 @@
             </objects>
             <point key="canvasLocation" x="67" y="1173"/>
         </scene>
-        <!--Todo-->
+        <!--Todo View Controller-->
         <scene sceneID="DTI-Jd-HS2">
             <objects>
                 <tableViewController id="ENc-fg-Pme" customClass="TodoViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -272,16 +272,39 @@
                             <outlet property="delegate" destination="ENc-fg-Pme" id="TE5-Ec-obB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todo" id="fWc-5B-thC">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="P2r-eJ-OYW">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="addButtonPressed:" destination="ENc-fg-Pme" id="jpO-1N-zpE"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" id="fWc-5B-thC">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="P2r-eJ-OYW">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="ENc-fg-Pme" id="jpO-1N-zpE"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Select" id="MN2-lg-Y8x">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="selectButtonPressed:" destination="ENc-fg-Pme" id="XIZ-51-GI1"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="In progress" id="Ldg-Qf-Y4T">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="inProgressStatusButtonPressed:" destination="ENc-fg-Pme" id="p80-cv-oto"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Completed" id="t12-oB-6jG">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="completedStatusButtonPressed:" destination="ENc-fg-Pme" id="Ndw-hw-udg"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="completedStatusBtn" destination="t12-oB-6jG" id="ag8-M7-nAG"/>
+                        <outlet property="inProgressStatusBtn" destination="Ldg-Qf-Y4T" id="xdZ-NQ-3HB"/>
                         <outlet property="searchBar" destination="QwP-Y0-bdd" id="HM1-K8-PFl"/>
+                        <outlet property="selectBtn" destination="MN2-lg-Y8x" id="glt-oG-GM4"/>
                         <segue destination="pkv-01-ZmW" kind="show" identifier="openAddTodoPage" id="ATa-iE-8YK"/>
                     </connections>
                 </tableViewController>
