@@ -59,15 +59,16 @@ class CategoryViewController: SwipeTableViewController {
         }
         
         override func updateModel(at indexPath: IndexPath) {
-            if let category = categories?[indexPath.row] {
-                do {
-                    try realm.write {
-                        realm.delete(category)
-                    }
-                    loadCategories()
-                } catch {
-                    print("The selected category can't be deleted, \(error)")
+            guard let category = categories?[indexPath.row] else {
+                fatalError("Selected category doesn't exist!")
+            }
+            do {
+                try realm.write {
+                    realm.delete(category)
                 }
+                loadCategories()
+            } catch {
+                print("The selected category can't be deleted, \(error)")
             }
         }
     }

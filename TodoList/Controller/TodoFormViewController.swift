@@ -24,28 +24,27 @@ class TodoFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let currentTodo = todo {
-            nameTxt.text = currentTodo.name
-            locationLbl.text! += "\n" + currentTodo.createdIn
+        guard let currentTodo = todo else {
+            fatalError("No todo is selected!")
         }
+        nameTxt.text = currentTodo.name
+        locationLbl.text! += "\n" + currentTodo.createdIn
         picker.delegate = self
         picker.dataSource = self
     }
 
     @IBAction func create(_ sender: Any) {
-        if let updatedTodo = todo {
-            do {
-                try realm.write() {
-                    updatedTodo.name = nameTxt.text!
-                    print(picker.selectedRow(inComponent: 0))
-                    updatedTodo.status = statuses[picker.selectedRow(inComponent: 0)]
-                }
-                delegate?.todoReceived(todo: updatedTodo)
-                self.navigationController?.popViewController(animated: true)
-
-            } catch {
-                print("Error in updating the todo, \(error)")
+        do {
+            try realm.write() {
+                todo!.name = nameTxt.text!
+                print(picker.selectedRow(inComponent: 0))
+                todo!.status = statuses[picker.selectedRow(inComponent: 0)]
             }
+            delegate?.todoReceived(todo: todo!)
+            self.navigationController?.popViewController(animated: true)
+
+        } catch {
+            print("Error in updating the todo, \(error)")
         }
     }
 

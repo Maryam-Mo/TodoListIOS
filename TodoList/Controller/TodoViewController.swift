@@ -51,20 +51,22 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Todo", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            if let currentCategory = self.selectedCategory {
-                do {
-                    try self.realm.write {
-                        let todo = TodoDataModel()
-                        todo.name = textField.text!
-                        todo.status = Status.StatusEnum.NEW.rawValue
-                        todo.createdIn = self.location
-                        currentCategory.items.append(todo)
-                    }
-                    self.reloadData()
-                } catch {
-                    print("Error in saving new todo \(error)")
-                }
+            guard let currentCategory = self.selectedCategory else {
+                fatalError("No category is selected!")
             }
+            do {
+                try self.realm.write {
+                    let todo = TodoDataModel()
+                    todo.name = textField.text!
+                    todo.status = Status.StatusEnum.NEW.rawValue
+                    todo.createdIn = self.location
+                    currentCategory.items.append(todo)
+                }
+                self.reloadData()
+            } catch {
+                print("Error in saving new todo \(error)")
+            }
+
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create a new Todo"
@@ -110,8 +112,12 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
                     print("Error in saving new todo \(error)")
                 }
             }
+            reloadData()
+        } else {
+            let alert = UIAlertController(title: "Please first select a row", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
         }
-        reloadData()
     }
     
     
@@ -132,8 +138,12 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
                     print("Error in saving new todo \(error)")
                 }
             }
+            reloadData()
+        } else {
+           let alert = UIAlertController(title: "Please first select a row", message: "", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+           present(alert, animated: true, completion: nil)
         }
-        reloadData()
     }
     
     // MARK: - Data Manipulation Methods
@@ -154,31 +164,34 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
     }
     
     override func updateModel(at indexPath: IndexPath) {
-        if let item = todos?[indexPath.row]{
-            do {
-                try realm.write() {
-                    realm.delete(item)
-                }
-                reloadData()
-            } catch {
-                print("The selected todo can't be deleted, \(error)")
+        guard let item = todos?[indexPath.row] else {
+            fatalError("Selected todo doesn't exist")
+        }
+        do {
+            try realm.write() {
+                realm.delete(item)
             }
+            reloadData()
+        } catch {
+            print("The selected todo can't be deleted, \(error)")
         }
     }
     
     //MARK: - Location Manager Delegate Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let lastLocation = locations[locations.count - 1] // Last location in this array is the most accurate one
-        if lastLocation.horizontalAccuracy > 0 { // As soon as the result has high accuracy we will stop updating the location
-            locationManager.stopUpdatingLocation()
-        }
-         let clLocation = CLLocation(latitude: lastLocation.coordinate.latitude, longitude: lastLocation.coordinate.longitude)
+        guard lastLocation.horizontalAccuracy > 0  else {
+            fatalError("There is no accuracy!")
+        }// As soon as the result has high accuracy we will stop updating the location
+        locationManager.stopUpdatingLocation()
+        let clLocation = CLLocation(latitude: lastLocation.coordinate.latitude, longitude: lastLocation.coordinate.longitude)
         TodoViewController.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
-          if let place = placemarks?.first {
+          guard let place = placemarks?.first else {
+            fatalError("Can't find the location")
+            }
             let result = "\(place)".split(separator: "@")
             self.location = String(result[0])
           }
-        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
