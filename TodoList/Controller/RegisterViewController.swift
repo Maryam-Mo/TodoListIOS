@@ -112,7 +112,11 @@ class RegisterViewController: UIViewController {
             try realm.write{
                 realm.create(UserDataModel.self, value: [0, firstName, lastName, contactNo, userName , password])
             }
+            let alert = UIAlertController(title: "Register", message: "You are now registered!", preferredStyle: UIAlertController.Style.alert)
+             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
             self.performSegue(withIdentifier: "openLoginPage", sender: self)
+             }))
+             self.present(alert, animated: true, completion: nil)
         } catch {
             print("Error saving user \(error)")
         }

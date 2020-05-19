@@ -112,7 +112,11 @@ class LoginViewController: UIViewController {
         let predicate = NSPredicate(format: "userName = %@ AND password = %@", userNameTxt.text!, passwordTxt.text!)
         loginUser = realm.objects(UserDataModel.self).filter(predicate).array
         if loginUser != nil {
-            performSegue(withIdentifier: "openCategoryPage", sender: self)
+            let alert = UIAlertController(title: "Login", message: "You are now login!", preferredStyle: UIAlertController.Style.alert)
+             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
+                self.performSegue(withIdentifier: "openCategoryPage", sender: self)
+             }))
+             self.present(alert, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Login", message: "The username or password is not correct!", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
