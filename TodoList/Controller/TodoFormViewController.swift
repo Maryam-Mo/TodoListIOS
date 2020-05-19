@@ -13,10 +13,10 @@ class TodoFormViewController: UIViewController {
     
     @IBOutlet weak var locationLbl: UILabel!
     @IBOutlet weak var picker: UIPickerView!
-    
-    let realm = try! Realm()
-
+    @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var nameTxt: UITextField!
+
+    let realm = try! Realm()
     
     var delegate : CanRecieveDelegate?
     var todo: TodoDataModel?
@@ -31,6 +31,19 @@ class TodoFormViewController: UIViewController {
         locationLbl.text! += "\n" + currentTodo.createdIn
         picker.delegate = self
         picker.dataSource = self
+        
+        picker.layer.shadowColor = UIColor.black.cgColor
+        picker.layer.shadowOffset = CGSize(width: 2, height: 2)
+        picker.layer.shadowRadius = 2
+        picker.layer.shadowOpacity = 1.0
+        nameTxt.layer.shadowColor = UIColor.black.cgColor
+        nameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        nameTxt.layer.shadowRadius = 2
+        nameTxt.layer.shadowOpacity = 1.0
+        saveBtn.layer.shadowColor = UIColor.black.cgColor
+        saveBtn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        saveBtn.layer.shadowRadius = 5
+        saveBtn.layer.shadowOpacity = 1.0
     }
 
     @IBAction func create(_ sender: Any) {

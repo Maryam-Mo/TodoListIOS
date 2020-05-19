@@ -19,12 +19,37 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var userNameTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var errorLbl: UILabel!
+    @IBOutlet weak var saveBtn: UIButton!
     
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLbl.isHidden = true
+        firstNameTxt.layer.shadowColor = UIColor.black.cgColor
+        firstNameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        firstNameTxt.layer.shadowRadius = 2
+        firstNameTxt.layer.shadowOpacity = 1.0
+        lastNameTxt.layer.shadowColor = UIColor.black.cgColor
+        lastNameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        lastNameTxt.layer.shadowRadius = 2
+        lastNameTxt.layer.shadowOpacity = 1.0
+        contactNoTxt.layer.shadowColor = UIColor.black.cgColor
+        contactNoTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        contactNoTxt.layer.shadowRadius = 2
+        contactNoTxt.layer.shadowOpacity = 1.0
+        userNameTxt.layer.shadowColor = UIColor.black.cgColor
+        userNameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        userNameTxt.layer.shadowRadius = 2
+        userNameTxt.layer.shadowOpacity = 1.0
+        passwordTxt.layer.shadowColor = UIColor.black.cgColor
+        passwordTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        passwordTxt.layer.shadowRadius = 2
+        passwordTxt.layer.shadowOpacity = 1.0
+        saveBtn.layer.shadowColor = UIColor.black.cgColor
+        saveBtn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        saveBtn.layer.shadowRadius = 5
+        saveBtn.layer.shadowOpacity = 1.0
     }
         
     @IBAction func save(_ sender: Any) {
