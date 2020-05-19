@@ -15,6 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userNameTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var errorLbl: UILabel!
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var registerBtn: UIButton!
     
     let realm = try! Realm()
     var loginUser: [UserDataModel]?
@@ -22,6 +24,23 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLbl.isHidden = true
+        userNameTxt.layer.shadowColor = UIColor.black.cgColor
+        userNameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        userNameTxt.layer.shadowRadius = 2
+        userNameTxt.layer.shadowOpacity = 1.0
+        passwordTxt.layer.shadowColor = UIColor.black.cgColor
+        passwordTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
+        passwordTxt.layer.shadowRadius = 2
+        passwordTxt.layer.shadowOpacity = 1.0
+        
+        loginBtn.layer.shadowColor = UIColor.black.cgColor
+        loginBtn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        loginBtn.layer.shadowRadius = 5
+        loginBtn.layer.shadowOpacity = 1.0
+        registerBtn.layer.shadowColor = UIColor.black.cgColor
+        registerBtn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        registerBtn.layer.shadowRadius = 5
+        registerBtn.layer.shadowOpacity = 1.0
     }
     
     override func viewWillAppear(_ animated: Bool) {
