@@ -17,26 +17,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpc-VW-EM4">
-                                <rect key="frame" x="161" y="405" width="92.5" height="86"/>
+                                <rect key="frame" x="140" y="292" width="134" height="100"/>
                                 <color key="tintColor" red="0.72941176470000002" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="72"/>
+                                <fontDescription key="fontDescription" name="Georgia-BoldItalic" family="Georgia" pointSize="88"/>
                                 <color key="textColor" red="0.72941176470000002" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can do it!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5T9-xY-DN6">
-                                <rect key="frame" x="70.5" y="499" width="273" height="58"/>
+                                <rect key="frame" x="62.5" y="423" width="289.5" height="60"/>
                                 <color key="tintColor" red="0.1529411765" green="0.13725490200000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <fontDescription key="fontDescription" name="Futura-MediumItalic" family="Futura" pointSize="46"/>
                                 <color key="textColor" red="0.89019607840000003" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.1529411765" green="0.13725490200000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hpc-VW-EM4" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6Fi-0a-FJK"/>
-                            <constraint firstItem="5T9-xY-DN6" firstAttribute="top" secondItem="hpc-VW-EM4" secondAttribute="bottom" constant="8" id="HTN-WL-J2n"/>
                             <constraint firstItem="5T9-xY-DN6" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Jvh-jn-v4N"/>
-                            <constraint firstItem="hpc-VW-EM4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="lQL-et-5PC"/>
+                            <constraint firstItem="5T9-xY-DN6" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Qa2-rz-96x"/>
+                            <constraint firstItem="5T9-xY-DN6" firstAttribute="top" secondItem="hpc-VW-EM4" secondAttribute="bottom" constant="31" id="ljX-nO-qsR"/>
                             <constraint firstItem="hpc-VW-EM4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="r0s-gk-QMy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

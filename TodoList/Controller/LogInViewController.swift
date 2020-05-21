@@ -17,7 +17,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var errorLbl: UILabel!
     @IBOutlet weak var loginBtn: UIButton!
-    @IBOutlet weak var registerBtn: UIButton!
     
     let realm = try! Realm()
     var loginUser: [UserDataModel]?
@@ -49,15 +48,10 @@ class LoginViewController: UIViewController {
         loginBtn.layer.shadowOffset = CGSize(width: 5, height: 5)
         loginBtn.layer.shadowRadius = 5
         loginBtn.layer.shadowOpacity = 1.0
-        registerBtn.layer.shadowColor = UIColor.black.cgColor
-        registerBtn.layer.shadowOffset = CGSize(width: 5, height: 5)
-        registerBtn.layer.shadowRadius = 5
-        registerBtn.layer.shadowOpacity = 1.0
     }
 
     @IBAction func login(_ sender: UIButton) {
         loginBtn.isEnabled = false
-        registerBtn.isEnabled = false
         SVProgressHUD.show()
         
         errorLbl.isHidden = true
@@ -104,7 +98,6 @@ class LoginViewController: UIViewController {
         guard let userName = userNameTxt.text, userNameTxt.text?.count != 0 else {
             SVProgressHUD.dismiss()
             loginBtn.isEnabled = true
-            registerBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter your username"
             return
@@ -115,7 +108,6 @@ class LoginViewController: UIViewController {
         guard let password = passwordTxt.text, passwordTxt.text?.count != 0 else {
             SVProgressHUD.dismiss()
             loginBtn.isEnabled = true
-            registerBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter your password"
             return
@@ -130,7 +122,6 @@ class LoginViewController: UIViewController {
              alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
                 self.performSegue(withIdentifier: "openCategoryPage", sender: self)
                 self.loginBtn.isEnabled = true
-                self.registerBtn.isEnabled = true
              }))
             self.present(alert, animated: true, completion: nil)
             SVProgressHUD.dismiss()
@@ -139,23 +130,9 @@ class LoginViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             SVProgressHUD.dismiss()
             loginBtn.isEnabled = true
-            registerBtn.isEnabled = true
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
-    
-    @IBAction func register(_ sender: Any) {
-        loginBtn.isEnabled = false
-        registerBtn.isEnabled = false
-        SVProgressHUD.show()
-        performSegue(withIdentifier: "openRegisterPage", sender: self)
-        loginBtn.isEnabled = true
-        registerBtn.isEnabled = true
-        SVProgressHUD.dismiss()
-        
-    }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openCategoryPage" {

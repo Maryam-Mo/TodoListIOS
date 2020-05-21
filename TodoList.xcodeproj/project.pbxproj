@@ -13,6 +13,7 @@
 		B215D8072457D12D00CBC78D /* TodoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215D8062457D12D00CBC78D /* TodoDataModel.swift */; };
 		B237D67A2431913700991B24 /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B237D6792431913700991B24 /* UserDataModel.swift */; };
 		B248F00D245088E800E6DDD7 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248F00C245088E800E6DDD7 /* CategoryViewController.swift */; };
+		B2577C2D2476490A0085A2FF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */; };
 		B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A8D23FD1C5F00021642 /* AppDelegate.swift */; };
 		B2620A9023FD1C5F00021642 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A8F23FD1C5F00021642 /* SceneDelegate.swift */; };
 		B2620A9223FD1C5F00021642 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A9123FD1C5F00021642 /* LogInViewController.swift */; };
@@ -35,6 +36,7 @@
 		B215D8062457D12D00CBC78D /* TodoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDataModel.swift; sourceTree = "<group>"; };
 		B237D6792431913700991B24 /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
 		B248F00C245088E800E6DDD7 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		B2620A8A23FD1C5F00021642 /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2620A8D23FD1C5F00021642 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2620A8F23FD1C5F00021642 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				B215D8002457C3A500CBC78D /* TodoViewController.swift */,
 				B215D8042457CFD600CBC78D /* TodoFormViewController.swift */,
 				B293B54124696AFE003AA4D5 /* SwipeTableViewController.swift */,
+				B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				B237D67A2431913700991B24 /* UserDataModel.swift in Sources */,
 				B2901FE7243C1083000F7F90 /* RegisterViewController.swift in Sources */,
 				B215D8012457C3A500CBC78D /* TodoViewController.swift in Sources */,
+				B2577C2D2476490A0085A2FF /* WelcomeViewController.swift in Sources */,
 				B215D8032457C7B100CBC78D /* CategoryDataModel.swift in Sources */,
 				B2620A9223FD1C5F00021642 /* LogInViewController.swift in Sources */,
 				B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */,

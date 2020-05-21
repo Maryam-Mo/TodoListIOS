@@ -131,7 +131,7 @@ class RegisterViewController: UIViewController {
             }
             let alert = UIAlertController(title: "Register", message: "You are now registered!", preferredStyle: UIAlertController.Style.alert)
              alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
-             self.performSegue(withIdentifier: "openLoginPage", sender: self)
+         self.navigationController?.popToRootViewController(animated: true)
              self.saveBtn.isEnabled = true
 
              }))
