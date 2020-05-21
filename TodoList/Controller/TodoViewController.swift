@@ -33,6 +33,7 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         //TODO: Set up the location manager
         inProgressStatusBtn.title = ""
         completedStatusBtn.title = ""

@@ -24,6 +24,7 @@ class TodoFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         guard let currentTodo = todo else {
             fatalError("No todo is selected!")
         }

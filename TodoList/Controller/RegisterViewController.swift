@@ -26,6 +26,7 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         errorLbl.isHidden = true
         createShadows()
     }
