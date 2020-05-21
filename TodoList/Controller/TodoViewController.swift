@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import CoreLocation
 
-class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
+class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var selectBtn: UIBarButtonItem!
@@ -41,6 +41,8 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        tableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "customTodoCell")
         tableView.separatorStyle = .none
 
     }
@@ -166,20 +168,6 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
         tableView.reloadData()
     }
     
-    override func updateModel(at indexPath: IndexPath) {
-        guard let item = todos?[indexPath.row] else {
-            fatalError("Selected todo doesn't exist")
-        }
-        do {
-            try realm.write() {
-                realm.delete(item)
-            }
-            reloadData()
-        } catch {
-            print("The selected todo can't be deleted, \(error)")
-        }
-    }
-    
     //MARK: - Location Manager Delegate Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let lastLocation = locations[locations.count - 1] // Last location in this array is the most accurate one
@@ -211,21 +199,56 @@ extension TodoViewController: CanRecieveDelegate {
 
 extension TodoViewController {
     // MARK: - Tableview Datasources Mathods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todos?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customTodoCell", for: indexPath) as! CustomTodoCell
         if let todo = todos?[indexPath.row] {
-            cell.textLabel?.text = "\(todo.name)(\(todo.status))"
+            cell.nameLbl.text = todo.name
+            cell.statusLbl.text = todo.status
             cell.accessoryType = todo.status == Status.StatusEnum.COMPLETED.rawValue ? .checkmark : .disclosureIndicator
+            if selectedCategory?.name.lowercased() == "home" {
+                cell.avatarImageView.image = UIImage(named: "home")
+            } else if selectedCategory?.name.lowercased() == "work" {
+                cell.avatarImageView.image = UIImage(named: "work")
+            } else if selectedCategory?.name.lowercased() == "shopping" {
+                cell.avatarImageView.image = UIImage(named: "shopping")
+            } else {
+                cell.avatarImageView.image = UIImage(named: "todo")
+            }
         } else {
-           cell.textLabel?.text = "No Items Added Yet"
+           cell.nameLbl.text = "No Items Added Yet"
         }
         return cell
     }
     // MARK: - Tableview Delegate method
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
+            guard let item = self.todos?[indexPath.row] else {
+                fatalError("Selected todo doesn't exist")
+            }
+            do {
+                try self.realm.write() {
+                    self.realm.delete(item)
+                }
+                self.reloadData()
+            } catch {
+                print("The selected todo can't be deleted, \(error)")
+            }
+            completion(true)
+        }
+        action.image = UIImage(named: "delete-icon")
+        return action
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTodo = todos?[indexPath.row]
         if (tableView.allowsMultipleSelectionDuringEditing) {
