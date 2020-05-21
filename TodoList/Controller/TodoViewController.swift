@@ -44,6 +44,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
         
         tableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "customTodoCell")
         tableView.separatorStyle = .none
+        tableView.rowHeight = 80
 
     }
     
