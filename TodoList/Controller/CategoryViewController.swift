@@ -20,7 +20,7 @@ class CategoryViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
-//        tableView.separatorStyle = .none
+        tableView.separatorStyle = .none
     }
     
     //MARK: - Add New Categories

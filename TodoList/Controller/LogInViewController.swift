@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SVProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -20,10 +21,21 @@ class LoginViewController: UIViewController {
     
     let realm = try! Realm()
     var loginUser: [UserDataModel]?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLbl.isHidden = true
+        createShadows()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        clearTextFields()
+        DispatchQueue.main.async {
+            self.passwordTxt.resignFirstResponder()
+        }
+    }
+    
+    fileprivate func createShadows() {
         userNameTxt.layer.shadowColor = UIColor.black.cgColor
         userNameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
         userNameTxt.layer.shadowRadius = 2
@@ -42,16 +54,12 @@ class LoginViewController: UIViewController {
         registerBtn.layer.shadowRadius = 5
         registerBtn.layer.shadowOpacity = 1.0
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        clearTextFields()
-        DispatchQueue.main.async {
-            self.passwordTxt.resignFirstResponder()
-        }
-    }
 
     @IBAction func login(_ sender: UIButton) {
-
+        loginBtn.isEnabled = false
+        registerBtn.isEnabled = false
+        SVProgressHUD.show()
+        
         errorLbl.isHidden = true
 
         validateUserName()
@@ -94,6 +102,9 @@ class LoginViewController: UIViewController {
     
     func validateUserName() {
         guard let userName = userNameTxt.text, userNameTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            loginBtn.isEnabled = true
+            registerBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter your username"
             return
@@ -102,6 +113,9 @@ class LoginViewController: UIViewController {
     
     func validatePassword() {
         guard let password = passwordTxt.text, passwordTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            loginBtn.isEnabled = true
+            registerBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter your password"
             return
@@ -115,18 +129,30 @@ class LoginViewController: UIViewController {
             let alert = UIAlertController(title: "Login", message: "You are now login!", preferredStyle: UIAlertController.Style.alert)
              alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
                 self.performSegue(withIdentifier: "openCategoryPage", sender: self)
+                self.loginBtn.isEnabled = true
+                self.registerBtn.isEnabled = true
              }))
-             self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
+            SVProgressHUD.dismiss()
         } else {
             let alert = UIAlertController(title: "Login", message: "The username or password is not correct!", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            SVProgressHUD.dismiss()
+            loginBtn.isEnabled = true
+            registerBtn.isEnabled = true
             self.present(alert, animated: true, completion: nil)
         }
     }
     
     
     @IBAction func register(_ sender: Any) {
+        loginBtn.isEnabled = false
+        registerBtn.isEnabled = false
+        SVProgressHUD.show()
         performSegue(withIdentifier: "openRegisterPage", sender: self)
+        loginBtn.isEnabled = true
+        registerBtn.isEnabled = true
+        SVProgressHUD.dismiss()
         
     }
     

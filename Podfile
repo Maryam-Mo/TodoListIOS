@@ -8,4 +8,5 @@ target 'TodoList' do
     pod 'RealmSwift'
     pod 'SwipeCellKit'
     pod 'ObjectMapper', '~> 3.5'
+    pod 'SVProgressHUD'
 end

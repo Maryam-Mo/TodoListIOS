@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import RealmSwift
+import SVProgressHUD
 
 class RegisterViewController: UIViewController {
     
@@ -26,6 +27,10 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLbl.isHidden = true
+        createShadows()
+    }
+    
+    fileprivate func createShadows() {
         firstNameTxt.layer.shadowColor = UIColor.black.cgColor
         firstNameTxt.layer.shadowOffset = CGSize(width: 2, height: 2)
         firstNameTxt.layer.shadowRadius = 2
@@ -53,30 +58,42 @@ class RegisterViewController: UIViewController {
     }
         
     @IBAction func save(_ sender: Any) {
+        saveBtn.isEnabled = false
+        SVProgressHUD.show()
         
         errorLbl.isHidden = true
         
         guard let firstName = firstNameTxt.text, firstNameTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            saveBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter the firstName"
             return
         }
         guard let lastName = lastNameTxt.text, lastNameTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            saveBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter the lastName"
             return
         }
         guard let contactNo = contactNoTxt.text, contactNoTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            saveBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter the contactNo"
             return
         }
         guard let userName = userNameTxt.text, userNameTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            saveBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter the userName"
             return
         }
         guard let password = passwordTxt.text, passwordTxt.text?.count != 0 else {
+            SVProgressHUD.dismiss()
+            saveBtn.isEnabled = true
             errorLbl.isHidden = false
             errorLbl.text = "Please enter the password"
             return
@@ -114,10 +131,15 @@ class RegisterViewController: UIViewController {
             }
             let alert = UIAlertController(title: "Register", message: "You are now registered!", preferredStyle: UIAlertController.Style.alert)
              alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
-            self.performSegue(withIdentifier: "openLoginPage", sender: self)
+             self.performSegue(withIdentifier: "openLoginPage", sender: self)
+             self.saveBtn.isEnabled = true
+
              }))
              self.present(alert, animated: true, completion: nil)
+             SVProgressHUD.dismiss()
         } catch {
+            SVProgressHUD.dismiss()
+            saveBtn.isEnabled = true
             print("Error saving user \(error)")
         }
     }

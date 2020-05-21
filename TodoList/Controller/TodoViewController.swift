@@ -40,6 +40,8 @@ class TodoViewController: SwipeTableViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        tableView.separatorStyle = .none
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
