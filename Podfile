@@ -9,4 +9,7 @@ target 'TodoList' do
     pod 'SwipeCellKit'
     pod 'ObjectMapper', '~> 3.5'
     pod 'SVProgressHUD'
+    pod 'Firebase'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Database'
 end

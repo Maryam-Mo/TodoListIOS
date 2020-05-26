@@ -16,6 +16,7 @@
 		B2577C2D2476490A0085A2FF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */; };
 		B2577C32247677BA0085A2FF /* CustomTodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2577C30247677BA0085A2FF /* CustomTodoCell.swift */; };
 		B2577C33247677BA0085A2FF /* TodoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2577C31247677BA0085A2FF /* TodoCell.xib */; };
+		B2577C35247CC59A0085A2FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2577C34247CC5990085A2FF /* GoogleService-Info.plist */; };
 		B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A8D23FD1C5F00021642 /* AppDelegate.swift */; };
 		B2620A9223FD1C5F00021642 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2620A9123FD1C5F00021642 /* LogInViewController.swift */; };
 		B2620A9523FD1C5F00021642 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2620A9323FD1C5F00021642 /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		B2577C30247677BA0085A2FF /* CustomTodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTodoCell.swift; sourceTree = "<group>"; };
 		B2577C31247677BA0085A2FF /* TodoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoCell.xib; sourceTree = "<group>"; };
+		B2577C34247CC5990085A2FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B2620A8A23FD1C5F00021642 /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2620A8D23FD1C5F00021642 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2620A9123FD1C5F00021642 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				B2620A9B23FD1C7200021642 /* Info.plist */,
+				B2577C34247CC5990085A2FF /* GoogleService-Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 			files = (
 				B2577C33247677BA0085A2FF /* TodoCell.xib in Resources */,
 				B2620A9A23FD1C7200021642 /* LaunchScreen.storyboard in Resources */,
+				B2577C35247CC59A0085A2FF /* GoogleService-Info.plist in Resources */,
 				B2620A9723FD1C7200021642 /* Assets.xcassets in Resources */,
 				B2620A9523FD1C5F00021642 /* Main.storyboard in Resources */,
 			);
