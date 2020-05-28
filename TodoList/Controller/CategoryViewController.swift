@@ -13,12 +13,10 @@ class CategoryViewController: SwipeTableViewController {
         
     var categories: [CategoryDataModel]?
     var selectedCategory: CategoryDataModel?
-    var ref: DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        ref = Database.database().reference().child("category")
         loadCategories()
         tableView.separatorStyle = .none
     }
@@ -42,40 +40,40 @@ class CategoryViewController: SwipeTableViewController {
         //MARK: - Data Manipulation Methods
     func save(name: String) {
             let categoryDictionary = ["name": name]
-        ref!.child(name.lowercased()).setValue(categoryDictionary) {
-                (error, reference) in
-                if error != nil {
-                    print("Error saving category \(error)")
-                } else {
-                    self.loadCategories()
-                }
-            }
+//        ref!.child(name.lowercased()).setValue(categoryDictionary) {
+//                (error, reference) in
+//                if error != nil {
+//                    print("Error saving category \(error)")
+//                } else {
+//                    self.loadCategories()
+//                }
+//            }
         }
         
         func loadCategories() {
             var newCategories: [CategoryDataModel] = []
-            ref!.observe(.value, with: { snapshot in
-                for child in snapshot.children {
-                    if let snapshot = child as? DataSnapshot {
-                         let snapshotValue = snapshot.value as! Dictionary<String, String>
-                         let name = snapshotValue["name"]!
-                         let category = CategoryDataModel()
-                         category.name = name
-                         newCategories.append(category)
-                  }
-                }
-                self.categories = newCategories
-                self.tableView.reloadData()
-            })
+//            ref!.observe(.value, with: { snapshot in
+//                for child in snapshot.children {
+//                    if let snapshot = child as? DataSnapshot {
+//                         let snapshotValue = snapshot.value as! Dictionary<String, String>
+//                         let name = snapshotValue["name"]!
+//                         let category = CategoryDataModel()
+//                         category.name = name
+//                         newCategories.append(category)
+//                  }
+//                }
+//                self.categories = newCategories
+//                self.tableView.reloadData()
+//            })
         }
         
         override func updateModel(at indexPath: IndexPath) {
             guard let category = categories?[indexPath.row] else {
                 fatalError("Selected category doesn't exist!")
             }
-            ref!.child(category.name.lowercased()).removeValue { error, _ in
-                   print(error)
-               }
+//            ref!.child(category.name.lowercased()).removeValue { error, _ in
+//                   print(error)
+//               }
             loadCategories()
         }
     }
