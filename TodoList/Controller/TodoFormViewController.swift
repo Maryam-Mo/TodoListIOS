@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+import Firebase
 
 class TodoFormViewController: UIViewController {
     
@@ -15,15 +15,15 @@ class TodoFormViewController: UIViewController {
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var nameTxt: UITextField!
-
-    let realm = try! Realm()
     
     var delegate : CanRecieveDelegate?
     var todo: TodoDataModel?
     var statuses: [String] = [Status.StatusEnum.IN_PROGRESS.rawValue, Status.StatusEnum.COMPLETED.rawValue]
+    var ref: DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference().child("todo")
         self.hideKeyboardWhenTappedAround()
         guard let currentTodo = todo else {
             fatalError("No todo is selected!")
@@ -48,18 +48,11 @@ class TodoFormViewController: UIViewController {
     }
 
     @IBAction func create(_ sender: Any) {
-        do {
-            try realm.write() {
-                todo!.name = nameTxt.text!
-                print(picker.selectedRow(inComponent: 0))
-                todo!.status = statuses[picker.selectedRow(inComponent: 0)]
-            }
-            delegate?.todoReceived(todo: todo!)
-            self.navigationController?.popViewController(animated: true)
-
-        } catch {
-            print("Error in updating the todo, \(error)")
-        }
+        ref!.child(todo!.name.lowercased()).updateChildValues(["name": nameTxt.text!, "status" : statuses[picker.selectedRow(inComponent: 0)]])
+        todo!.name = nameTxt.text!
+        todo!.status = statuses[picker.selectedRow(inComponent: 0)]
+        delegate?.todoReceived(todo: todo!)
+        self.navigationController?.popViewController(animated: true)
     }
 
 }

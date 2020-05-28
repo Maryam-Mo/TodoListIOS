@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import RealmSwift
 
-class CategoryDataModel: Object{
+class CategoryDataModel{
     
-    @objc dynamic var id: Int = 0
-    @objc dynamic var name: String = ""
-    let items = List<TodoDataModel>()
+    var name: String = ""
 
 }
+

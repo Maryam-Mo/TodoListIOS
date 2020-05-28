@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import RealmSwift
 import CoreLocation
+import Firebase
 
 class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     
@@ -17,7 +17,6 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     @IBOutlet weak var inProgressStatusBtn: UIBarButtonItem!
     @IBOutlet weak var completedStatusBtn: UIBarButtonItem!
     
-    let realm = try! Realm()
     static let geoCoder = CLGeocoder()
 
     var location: String = ""
@@ -25,8 +24,10 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     var todos: [TodoDataModel]?
     var selectedTodo: TodoDataModel?
     var selectedTodos: [TodoDataModel]?
+    var ref: DatabaseReference?
     var selectedCategory: CategoryDataModel? {
        didSet {
+        ref = Database.database().reference().child("todo")
         reloadData()
        }
     }
@@ -34,7 +35,6 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        //TODO: Set up the location manager
         inProgressStatusBtn.title = ""
         completedStatusBtn.title = ""
         locationManager.delegate = self
@@ -50,6 +50,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         title = selectedCategory?.name
+        reloadData()
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -60,19 +61,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
             guard let currentCategory = self.selectedCategory else {
                 fatalError("No category is selected!")
             }
-            do {
-                try self.realm.write {
-                    let todo = TodoDataModel()
-                    todo.name = textField.text!
-                    todo.status = Status.StatusEnum.NEW.rawValue
-                    todo.createdIn = self.location
-                    currentCategory.items.append(todo)
-                }
-                self.reloadData()
-            } catch {
-                print("Error in saving new todo \(error)")
-            }
-
+            self.save(name: textField.text!)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create a new Todo"
@@ -110,13 +99,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
         tableView.setEditing(false, animated: false)
         if let todos = selectedTodos {
             for todo in todos {
-                do {
-                    try self.realm.write {
-                        todo.status = Status.StatusEnum.IN_PROGRESS.rawValue
-                    }
-                } catch {
-                    print("Error in saving new todo \(error)")
-                }
+                ref!.child(todo.name.lowercased()).updateChildValues(["status" : Status.StatusEnum.IN_PROGRESS.rawValue])
             }
             reloadData()
         } else {
@@ -136,13 +119,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
         tableView.setEditing(false, animated: false)
         if let todos = selectedTodos {
             for todo in todos {
-                do {
-                    try self.realm.write {
-                        todo.status = Status.StatusEnum.COMPLETED.rawValue
-                    }
-                } catch {
-                    print("Error in saving new todo \(error)")
-                }
+                ref!.child(todo.name.lowercased()).updateChildValues(["status" : Status.StatusEnum.COMPLETED.rawValue])
             }
             reloadData()
         } else {
@@ -153,20 +130,37 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     // MARK: - Data Manipulation Methods
-    func save(todo: TodoDataModel) {
-        do {
-            try realm.write {
-                realm.add(todo)
+    func save(name: String) {
+        let todoDictionary = ["name": name, "status": Status.StatusEnum.NEW.rawValue, "createdIn": location, "categoryName": selectedCategory!.name]
+        ref!.child(name.lowercased()).setValue(todoDictionary) {
+                (error, reference) in
+                if error != nil {
+                    print("Error saving todo \(error)")
+                } else {
+                    self.reloadData()
+                }
             }
-            reloadData()
-        } catch {
-            print("Error saving todo \(error)")
-        }
     }
             
     func reloadData() {
-        todos = realm.objects(TodoDataModel.self).array
-        tableView.reloadData()
+        var newTodos: [TodoDataModel] = []
+        ref!.observe(.value, with: { snapshot in
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot {
+                    let snapshotValue = snapshot.value as! Dictionary<String, String>
+                    if (snapshotValue["categoryName"]?.lowercased() == self.selectedCategory!.name.lowercased()) {
+                        let todo = TodoDataModel()
+                        todo.name = snapshotValue["name"]!
+                        todo.status = snapshotValue["status"]!
+                        todo.createdIn = snapshotValue["createdIn"]!
+                        todo.categoryName = snapshotValue["categoryName"]!
+                        newTodos.append(todo)
+                    }
+              }
+            }
+            self.todos = newTodos
+            self.tableView.reloadData()
+        })
     }
     
     //MARK: - Location Manager Delegate Methods
@@ -236,14 +230,10 @@ extension TodoViewController {
             guard let item = self.todos?[indexPath.row] else {
                 fatalError("Selected todo doesn't exist")
             }
-            do {
-                try self.realm.write() {
-                    self.realm.delete(item)
-                }
-                self.reloadData()
-            } catch {
-                print("The selected todo can't be deleted, \(error)")
-            }
+            self.ref!.child(item.name.lowercased()).removeValue { error, _ in
+                   print(error)
+               }
+            self.reloadData()
             completion(true)
         }
         action.image = UIImage(named: "delete-icon")

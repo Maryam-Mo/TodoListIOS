@@ -7,19 +7,18 @@
 //
 
 import UIKit
-import RealmSwift
+import Firebase
 
 class CategoryViewController: SwipeTableViewController {
         
-    let realm = try! Realm()
-
     var categories: [CategoryDataModel]?
-    var user: UserDataModel?
     var selectedCategory: CategoryDataModel?
+    var ref: DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        ref = Database.database().reference().child("category")
         loadCategories()
         tableView.separatorStyle = .none
     }
@@ -30,9 +29,7 @@ class CategoryViewController: SwipeTableViewController {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            let category = CategoryDataModel()
-            category.name = textField.text!
-            self.save(category: category)
+            self.save(name: textField.text!)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create a new category"
@@ -43,34 +40,43 @@ class CategoryViewController: SwipeTableViewController {
     }
     
         //MARK: - Data Manipulation Methods
-        func save(category: CategoryDataModel) {
-            do {
-                try realm.write{
-                    realm.add(category)
+    func save(name: String) {
+            let categoryDictionary = ["name": name]
+        ref!.child(name.lowercased()).setValue(categoryDictionary) {
+                (error, reference) in
+                if error != nil {
+                    print("Error saving category \(error)")
+                } else {
+                    self.loadCategories()
                 }
-            } catch {
-                print("Error saving category \(error)")
             }
-            loadCategories()
         }
         
         func loadCategories() {
-            categories = realm.objects(CategoryDataModel.self).array
-            tableView.reloadData()
+            var newCategories: [CategoryDataModel] = []
+            ref!.observe(.value, with: { snapshot in
+                for child in snapshot.children {
+                    if let snapshot = child as? DataSnapshot {
+                         let snapshotValue = snapshot.value as! Dictionary<String, String>
+                         let name = snapshotValue["name"]!
+                         let category = CategoryDataModel()
+                         category.name = name
+                         newCategories.append(category)
+                  }
+                }
+                self.categories = newCategories
+                self.tableView.reloadData()
+            })
         }
         
         override func updateModel(at indexPath: IndexPath) {
             guard let category = categories?[indexPath.row] else {
                 fatalError("Selected category doesn't exist!")
             }
-            do {
-                try realm.write {
-                    realm.delete(category)
-                }
-                loadCategories()
-            } catch {
-                print("The selected category can't be deleted, \(error)")
-            }
+            ref!.child(category.name.lowercased()).removeValue { error, _ in
+                   print(error)
+               }
+            loadCategories()
         }
     }
 

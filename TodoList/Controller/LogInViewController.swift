@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import RealmSwift
 import SVProgressHUD
+import Firebase
 
 class LoginViewController: UIViewController {
     
@@ -17,10 +17,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var errorLbl: UILabel!
     @IBOutlet weak var loginBtn: UIButton!
-    
-    let realm = try! Realm()
-    var loginUser: [UserDataModel]?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -57,45 +54,6 @@ class LoginViewController: UIViewController {
         
         errorLbl.isHidden = true
 
-        validateUserName()
-        validatePassword()
-
-        login()
-                
-    
-//        let session = URLSession.shared
-//        let url = URL(string: "http://192.168.1.5:8080/api/user/login")!
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        let json = [
-//            "userName": "\(userNameTxt.text)",
-//            "password": "\(passwordTxt.text)"
-//        ]
-//
-//        let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
-//
-//        let task = session.uploadTask(with: request, from: jsonData) { data, response, error in
-//            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-////                    let responseInfo = try JSONDecoder().decode(loginResponse.self, from: data)
-//                    print(dataString)
-//                    let alert = UIAlertController(title: "Login", message: "You are login now!", preferredStyle: UIAlertController.Style.alert)
-//
-//
-//                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-//
-//                    self.present(alert, animated: true, completion: nil)
-//            }
-//
-//        }
-//
-//        task.resume()
-    }
-    
-    func validateUserName() {
         guard let userName = userNameTxt.text, userNameTxt.text?.count != 0 else {
             SVProgressHUD.dismiss()
             loginBtn.isEnabled = true
@@ -103,9 +61,6 @@ class LoginViewController: UIViewController {
             errorLbl.text = "Please enter your username"
             return
         }
-    }
-    
-    func validatePassword() {
         guard let password = passwordTxt.text, passwordTxt.text?.count != 0 else {
             SVProgressHUD.dismiss()
             loginBtn.isEnabled = true
@@ -113,32 +68,28 @@ class LoginViewController: UIViewController {
             errorLbl.text = "Please enter your password"
             return
         }
+
+        login(userName: userName, password: password)
+                
     }
     
-    func login() {
-        let predicate = NSPredicate(format: "userName = %@ AND password = %@", userNameTxt.text!, passwordTxt.text!)
-        loginUser = realm.objects(UserDataModel.self).filter(predicate).array
-        if loginUser != nil {
-            let alert = UIAlertController(title: "Login", message: "You are now login!", preferredStyle: UIAlertController.Style.alert)
-             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
-                self.performSegue(withIdentifier: "openCategoryPage", sender: self)
+    func login(userName: String, password: String) {
+        Auth.auth().signIn(withEmail: userName, password: password) { (user, error) in
+            if error != nil {
+                let alert = UIAlertController(title: "Login", message: "The username or password is not correct!", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                SVProgressHUD.dismiss()
                 self.loginBtn.isEnabled = true
-             }))
-            self.present(alert, animated: true, completion: nil)
-            SVProgressHUD.dismiss()
-        } else {
-            let alert = UIAlertController(title: "Login", message: "The username or password is not correct!", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            SVProgressHUD.dismiss()
-            loginBtn.isEnabled = true
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openCategoryPage" {
-            if let target = segue.destination as? CategoryViewController {
-                target.user = loginUser![0]
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                let alert = UIAlertController(title: "Login", message: "You are now login!", preferredStyle: UIAlertController.Style.alert)
+                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
+                    self.performSegue(withIdentifier: "openCategoryPage", sender: self)
+                    self.loginBtn.isEnabled = true
+                 }))
+                self.present(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
             }
         }
     }
@@ -146,13 +97,6 @@ class LoginViewController: UIViewController {
     func clearTextFields() {
         userNameTxt.text = ""
         passwordTxt.text = ""
-    }
-}
-
-extension Results {
-    
-    var array: [Element]? {
-        return self.count > 0 ? self.map { $0 } : nil
     }
 }
 

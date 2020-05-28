@@ -7,10 +7,8 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyJSON
-import RealmSwift
 import SVProgressHUD
+import Firebase
 
 class RegisterViewController: UIViewController {
     
@@ -21,9 +19,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var errorLbl: UILabel!
     @IBOutlet weak var saveBtn: UIButton!
-    
-    let realm = try! Realm()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -100,48 +96,27 @@ class RegisterViewController: UIViewController {
             return
         }
         
-        saveInRealm(firstName: firstName, lastName: lastName, contactNo: contactNo, userName: userName, password: password)
-
-//        let url = "http://192.168.1.5:8080/api/user/register"
-//
-//        let json = [
-//            "firstName": "\(firstNameTxt.text)",
-//            "lastName": "\(lastNameTxt.text)",
-//            "contactNo": "\(contactNoTxt.text)",
-//            "userName": "\(userNameTxt.text)",
-//            "password": "\(passwordTxt.text)"
-//        ]
-//
-//        Alamofire.request(url, method: .post, parameters: json, encoding: JSONEncoding.default, headers: [:]).responseJSON {
-//                    response in
-//                    switch (response.result) {
-//                    case .success:
-//                    self.performSegue(withIdentifier: "openLoginPage", sender: self)
-//                    case .failure:
-//                        print(Error.self)
-//                    }
-//                }
-        }
+        saveInFirebase(userName: userName, password: password)
+    }
 
     
     //MARK: - Data Manipulation Methods
-    func saveInRealm(firstName: String, lastName: String, contactNo: String, userName: String, password: String) {
-        do {
-            try realm.write{
-                realm.create(UserDataModel.self, value: [0, firstName, lastName, contactNo, userName , password])
-            }
-            let alert = UIAlertController(title: "Register", message: "You are now registered!", preferredStyle: UIAlertController.Style.alert)
-             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
-         self.navigationController?.popToRootViewController(animated: true)
-             self.saveBtn.isEnabled = true
+    func saveInFirebase(userName: String, password: String) {
+        Auth.auth().createUser(withEmail: userName, password: password) { (user, error) in
+            if error != nil {
+                SVProgressHUD.dismiss()
+                self.saveBtn.isEnabled = true
+                print("Error saving user \(error)")
+            } else {
+               let alert = UIAlertController(title: "Register", message: "You are now registered!", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
+                self.navigationController?.popToRootViewController(animated: true)
+                    self.saveBtn.isEnabled = true
 
-             }))
-             self.present(alert, animated: true, completion: nil)
-             SVProgressHUD.dismiss()
-        } catch {
-            SVProgressHUD.dismiss()
-            saveBtn.isEnabled = true
-            print("Error saving user \(error)")
+                    }))
+                self.present(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+            }
         }
     }
     
