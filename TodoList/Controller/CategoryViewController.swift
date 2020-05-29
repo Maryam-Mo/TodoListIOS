@@ -39,42 +39,43 @@ class CategoryViewController: SwipeTableViewController {
     
         //MARK: - Data Manipulation Methods
     func save(name: String) {
-            let categoryDictionary = ["name": name]
-//        ref!.child(name.lowercased()).setValue(categoryDictionary) {
-//                (error, reference) in
-//                if error != nil {
-//                    print("Error saving category \(error)")
-//                } else {
-//                    self.loadCategories()
-//                }
-//            }
+        Firestore.firestore().collection("category").document(name).setData(["name": name]) { (error) in
+            if error != nil {
+                print("Error saving category \(error)")
+            } else {
+                self.loadCategories()
+            }
         }
+    }
         
         func loadCategories() {
             var newCategories: [CategoryDataModel] = []
-//            ref!.observe(.value, with: { snapshot in
-//                for child in snapshot.children {
-//                    if let snapshot = child as? DataSnapshot {
-//                         let snapshotValue = snapshot.value as! Dictionary<String, String>
-//                         let name = snapshotValue["name"]!
-//                         let category = CategoryDataModel()
-//                         category.name = name
-//                         newCategories.append(category)
-//                  }
-//                }
-//                self.categories = newCategories
-//                self.tableView.reloadData()
-//            })
+            Firestore.firestore().collection("category").getDocuments { (snapshot, error) in
+                if error == nil && snapshot != nil {
+                    for document in snapshot!.documents {
+                        let documentData = document.data()
+                        let name = documentData["name"]!
+                        let category = CategoryDataModel()
+                        category.name = name as! String
+                        newCategories.append(category)
+                    }
+                    self.categories = newCategories
+                    self.tableView.reloadData()
+                }
+            }
         }
         
         override func updateModel(at indexPath: IndexPath) {
             guard let category = categories?[indexPath.row] else {
                 fatalError("Selected category doesn't exist!")
             }
-//            ref!.child(category.name.lowercased()).removeValue { error, _ in
-//                   print(error)
-//               }
-            loadCategories()
+            Firestore.firestore().collection("category").document(category.name).delete { (error) in
+                if error != nil {
+                    print(error)
+                } else {
+                    self.loadCategories()
+                }
+            }
         }
     }
 

@@ -19,11 +19,9 @@ class TodoFormViewController: UIViewController {
     var delegate : CanRecieveDelegate?
     var todo: TodoDataModel?
     var statuses: [String] = [Status.StatusEnum.IN_PROGRESS.rawValue, Status.StatusEnum.COMPLETED.rawValue]
-    var ref: DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = Database.database().reference().child("todo")
         self.hideKeyboardWhenTappedAround()
         guard let currentTodo = todo else {
             fatalError("No todo is selected!")
@@ -48,11 +46,15 @@ class TodoFormViewController: UIViewController {
     }
 
     @IBAction func create(_ sender: Any) {
-        ref!.child(todo!.name.lowercased()).updateChildValues(["name": nameTxt.text!, "status" : statuses[picker.selectedRow(inComponent: 0)]])
-        todo!.name = nameTxt.text!
-        todo!.status = statuses[picker.selectedRow(inComponent: 0)]
-        delegate?.todoReceived(todo: todo!)
-        self.navigationController?.popViewController(animated: true)
+        Firestore.firestore().collection("todo").document(todo!.name).updateData(["name": nameTxt.text!, "status" : statuses[picker.selectedRow(inComponent: 0)]]) { (error) in
+            if error != nil {
+                print("Error in updating todo \(error)")
+            } else {
+                self.todo!.name = self.nameTxt.text!
+                self.todo!.status = self.statuses[self.picker.selectedRow(inComponent: 0)]
+                self.delegate?.todoReceived(todo: self.todo!)
+                self.navigationController?.popViewController(animated: true)            }
+        }
     }
 
 }

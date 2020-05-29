@@ -24,10 +24,8 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     var todos: [TodoDataModel]?
     var selectedTodo: TodoDataModel?
     var selectedTodos: [TodoDataModel]?
-    var ref: DatabaseReference?
     var selectedCategory: CategoryDataModel? {
        didSet {
-        ref = Database.database().reference().child("todo")
         reloadData()
        }
     }
@@ -99,7 +97,13 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
         tableView.setEditing(false, animated: false)
         if let todos = selectedTodos {
             for todo in todos {
-                ref!.child(todo.name.lowercased()).updateChildValues(["status" : Status.StatusEnum.IN_PROGRESS.rawValue])
+                Firestore.firestore().collection("todo").document(todo.name).updateData(["status" : Status.StatusEnum.IN_PROGRESS.rawValue]) { (error) in
+                    if error != nil {
+                        print("Error in updating todo \(error)")
+                    } else {
+                        self.reloadData()
+                    }
+                }
             }
             reloadData()
         } else {
@@ -119,7 +123,13 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
         tableView.setEditing(false, animated: false)
         if let todos = selectedTodos {
             for todo in todos {
-                ref!.child(todo.name.lowercased()).updateChildValues(["status" : Status.StatusEnum.COMPLETED.rawValue])
+                Firestore.firestore().collection("todo").document(todo.name).updateData(["status" : Status.StatusEnum.COMPLETED.rawValue]) { (error) in
+                    if error != nil {
+                        print("Error in updating todo \(error)")
+                    } else {
+                        self.reloadData()
+                    }
+                }
             }
             reloadData()
         } else {
@@ -131,36 +141,32 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
     
     // MARK: - Data Manipulation Methods
     func save(name: String) {
-        let todoDictionary = ["name": name, "status": Status.StatusEnum.NEW.rawValue, "createdIn": location, "categoryName": selectedCategory!.name]
-        ref!.child(name.lowercased()).setValue(todoDictionary) {
-                (error, reference) in
-                if error != nil {
-                    print("Error saving todo \(error)")
-                } else {
-                    self.reloadData()
-                }
+        Firestore.firestore().collection("todo").document(name).setData(["name": name, "status": Status.StatusEnum.NEW.rawValue, "createdIn": location, "categoryName": selectedCategory!.name]) { (error) in
+            if error != nil {
+                print("Error saving todo \(error)")
+            } else {
+                self.reloadData()
             }
+        }
     }
             
     func reloadData() {
         var newTodos: [TodoDataModel] = []
-        ref!.observe(.value, with: { snapshot in
-            for child in snapshot.children {
-                if let snapshot = child as? DataSnapshot {
-                    let snapshotValue = snapshot.value as! Dictionary<String, String>
-                    if (snapshotValue["categoryName"]?.lowercased() == self.selectedCategory!.name.lowercased()) {
-                        let todo = TodoDataModel()
-                        todo.name = snapshotValue["name"]!
-                        todo.status = snapshotValue["status"]!
-                        todo.createdIn = snapshotValue["createdIn"]!
-                        todo.categoryName = snapshotValue["categoryName"]!
-                        newTodos.append(todo)
-                    }
-              }
+        Firestore.firestore().collection("todo").whereField("categoryName", isEqualTo: selectedCategory!.name).getDocuments { (snapshot, error) in
+            if error == nil && snapshot != nil {
+                for document in snapshot!.documents {
+                    let documentData = document.data()
+                    let todo = TodoDataModel()
+                    todo.name = documentData["name"]! as! String
+                    todo.status = documentData["status"]! as! String
+                    todo.createdIn = documentData["createdIn"]! as! String
+                    todo.categoryName = documentData["categoryName"]! as! String
+                    newTodos.append(todo)
+                }
+                self.todos = newTodos
+                self.tableView.reloadData()
             }
-            self.todos = newTodos
-            self.tableView.reloadData()
-        })
+        }
     }
     
     //MARK: - Location Manager Delegate Methods
@@ -194,7 +200,6 @@ extension TodoViewController: CanRecieveDelegate {
 
 extension TodoViewController {
     // MARK: - Tableview Datasources Mathods
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todos?.count ?? 1
     }
@@ -230,11 +235,13 @@ extension TodoViewController {
             guard let item = self.todos?[indexPath.row] else {
                 fatalError("Selected todo doesn't exist")
             }
-            self.ref!.child(item.name.lowercased()).removeValue { error, _ in
-                   print(error)
-               }
-            self.reloadData()
-            completion(true)
+            Firestore.firestore().collection("todo").document(item.name).delete { (error) in
+                if error != nil {
+                    print(error)
+                } else {
+                    self.reloadData()
+                }
+            }
         }
         action.image = UIImage(named: "delete-icon")
         return action
