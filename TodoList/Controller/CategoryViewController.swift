@@ -88,6 +88,8 @@ extension CategoryViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let category = categories?[indexPath.row] {
             cell.textLabel?.text = category.name
+        } else {
+            cell.textLabel?.text = "No Categroy Added Yet"
         }
         return cell
     }

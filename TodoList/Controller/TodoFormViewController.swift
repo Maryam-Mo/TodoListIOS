@@ -20,7 +20,7 @@ class TodoFormViewController: UIViewController {
     
     var delegate : CanRecieveDelegate?
     var todo: TodoDataModel?
-    var statuses: [String] = [Status.StatusEnum.IN_PROGRESS.rawValue, Status.StatusEnum.COMPLETED.rawValue]
+    var statuses: [String] = [StatusEnum.IN_PROGRESS.rawValue, StatusEnum.COMPLETED.rawValue]
     
     override func viewDidLoad() {
         super.viewDidLoad()

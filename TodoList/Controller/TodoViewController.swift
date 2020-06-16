@@ -64,7 +64,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
                 try self.realm.write {
                     let todo = TodoDataModel()
                     todo.name = textField.text!
-                    todo.status = Status.StatusEnum.NEW.rawValue
+                    todo.status = StatusEnum.NEW.rawValue
                     todo.createdIn = self.location
                     currentCategory.items.append(todo)
                 }
@@ -112,7 +112,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
             for todo in todos {
                 do {
                     try self.realm.write {
-                        todo.status = Status.StatusEnum.IN_PROGRESS.rawValue
+                        todo.status = StatusEnum.IN_PROGRESS.rawValue
                     }
                 } catch {
                     print("Error in saving new todo \(error)")
@@ -138,7 +138,7 @@ class TodoViewController: UITableViewController, CLLocationManagerDelegate {
             for todo in todos {
                 do {
                     try self.realm.write {
-                        todo.status = Status.StatusEnum.COMPLETED.rawValue
+                        todo.status = StatusEnum.COMPLETED.rawValue
                     }
                 } catch {
                     print("Error in saving new todo \(error)")
@@ -210,7 +210,7 @@ extension TodoViewController {
         if let todo = todos?[indexPath.row] {
             cell.nameLbl.text = todo.name
             cell.statusLbl.text = todo.status
-            cell.accessoryType = todo.status == Status.StatusEnum.COMPLETED.rawValue ? .checkmark : .disclosureIndicator
+            cell.accessoryType = todo.status == StatusEnum.COMPLETED.rawValue ? .checkmark : .disclosureIndicator
             if selectedCategory?.name.lowercased() == "home" {
                 cell.avatarImageView.image = UIImage(named: "home")
             } else if selectedCategory?.name.lowercased() == "work" {
@@ -253,7 +253,7 @@ extension TodoViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTodo = todos?[indexPath.row]
         if (tableView.allowsMultipleSelectionDuringEditing) {
-            if selectedTodo!.status != Status.StatusEnum.COMPLETED.rawValue {
+            if selectedTodo!.status != StatusEnum.COMPLETED.rawValue {
                 selectedTodos?.append(selectedTodo!)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -262,7 +262,7 @@ extension TodoViewController {
                 present(alert, animated: true, completion: nil)
             }
         } else {
-            if selectedTodo!.status != Status.StatusEnum.COMPLETED.rawValue {
+            if selectedTodo!.status != StatusEnum.COMPLETED.rawValue {
                 performSegue(withIdentifier: "openAddTodoPage", sender: self)
             } else {
                 let alert = UIAlertController(title: "Can't update a completed todo", message: "", preferredStyle: .alert)

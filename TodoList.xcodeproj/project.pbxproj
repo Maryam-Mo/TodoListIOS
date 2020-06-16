@@ -11,6 +11,7 @@
 		B215D8032457C7B100CBC78D /* CategoryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215D8022457C7B100CBC78D /* CategoryDataModel.swift */; };
 		B215D8052457CFD600CBC78D /* TodoFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215D8042457CFD600CBC78D /* TodoFormViewController.swift */; };
 		B215D8072457D12D00CBC78D /* TodoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215D8062457D12D00CBC78D /* TodoDataModel.swift */; };
+		B233BB8924988F54008CD6E0 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233BB8824988F54008CD6E0 /* Keyboard.swift */; };
 		B237D67A2431913700991B24 /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B237D6792431913700991B24 /* UserDataModel.swift */; };
 		B248F00D245088E800E6DDD7 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248F00C245088E800E6DDD7 /* CategoryViewController.swift */; };
 		B2577C2D2476490A0085A2FF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */; };
@@ -35,6 +36,7 @@
 		B215D8022457C7B100CBC78D /* CategoryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDataModel.swift; sourceTree = "<group>"; };
 		B215D8042457CFD600CBC78D /* TodoFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoFormViewController.swift; sourceTree = "<group>"; };
 		B215D8062457D12D00CBC78D /* TodoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDataModel.swift; sourceTree = "<group>"; };
+		B233BB8824988F54008CD6E0 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		B237D6792431913700991B24 /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
 		B248F00C245088E800E6DDD7 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B2577C2C2476490A0085A2FF /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B233BB8724988F2B008CD6E0 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				B233BB8824988F54008CD6E0 /* Keyboard.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		B24ECE8E23FFECF200250584 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +96,7 @@
 		B24ECE8F23FFF1DF00250584 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B233BB8724988F2B008CD6E0 /* utils */,
 				B2620A8D23FD1C5F00021642 /* AppDelegate.swift */,
 				B2620A9123FD1C5F00021642 /* LogInViewController.swift */,
 				B2901FE6243C1083000F7F90 /* RegisterViewController.swift */,
@@ -297,6 +308,7 @@
 				B2577C2D2476490A0085A2FF /* WelcomeViewController.swift in Sources */,
 				B215D8032457C7B100CBC78D /* CategoryDataModel.swift in Sources */,
 				B2620A9223FD1C5F00021642 /* LogInViewController.swift in Sources */,
+				B233BB8924988F54008CD6E0 /* Keyboard.swift in Sources */,
 				B2620A8E23FD1C5F00021642 /* AppDelegate.swift in Sources */,
 				B2577C32247677BA0085A2FF /* CustomTodoCell.swift in Sources */,
 				B248F00D245088E800E6DDD7 /* CategoryViewController.swift in Sources */,

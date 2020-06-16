@@ -8,10 +8,8 @@
 
 import Foundation
 
-class Status {
-    enum StatusEnum: String {
-        case NEW
-        case IN_PROGRESS
-        case COMPLETED
-    }
+enum StatusEnum: String {
+    case NEW
+    case IN_PROGRESS
+    case COMPLETED
 }
